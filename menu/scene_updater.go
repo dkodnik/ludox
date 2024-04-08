@@ -8,6 +8,9 @@ import (
 	"github.com/libretro/ludo/core"
 	"github.com/libretro/ludo/ludos"
 	ntf "github.com/libretro/ludo/notifications"
+
+	"github.com/libretro/ludo/l10n"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
 type sceneUpdater struct {
@@ -16,10 +19,15 @@ type sceneUpdater struct {
 
 func buildUpdater() Scene {
 	var list sceneUpdater
-	list.label = "Updater Menu"
+
+	tUpdaterMenu := l10n.T9(&i18n.Message{ID: "UpdaterMenu", Other: "Updater Menu"})
+
+	list.label = tUpdaterMenu //"Updater Menu"
+
+	tCheckingUpdates := l10n.T9(&i18n.Message{ID: "CheckingUpdates", Other: "Checking updates"})
 
 	list.children = append(list.children, entry{
-		label: "Checking updates",
+		label: tCheckingUpdates, //"Checking updates",
 		icon:  "reload",
 	})
 
@@ -36,17 +44,22 @@ func buildUpdater() Scene {
 			rel := (*rels)[0]
 
 			if rel.Name[1:] == ludos.Version {
-				list.children[0].label = "Up to date"
+				tUp2Date := l10n.T9(&i18n.Message{ID: "Up2Date", Other: "Up to date"})
+
+				list.children[0].label = tUp2Date //"Up to date"
 				list.children[0].icon = "subsetting"
 				return
 			}
 
-			list.children[0].label = "Upgrade to " + rel.Name
+			tUpgrade2 := l10n.T9(&i18n.Message{ID: "Upgrade2", Other: "Upgrade to "})
+
+			list.children[0].label = tUpgrade2 + rel.Name //"Upgrade to " + rel.Name
 			list.children[0].icon = "menu_saving"
 			list.children[0].callbackOK = func() {
 				asset := ludos.FilterAssets(rel.Assets)
 				if asset == nil {
-					ntf.DisplayAndLog(ntf.Error, "Menu", "No matching asset")
+					txtI18n := l10n.T9(&i18n.Message{ID: "NoMatchAsset", Other: "No matching asset"})
+					ntf.DisplayAndLog(ntf.Error, "Menu", txtI18n)
 					return
 				}
 				go func() {
@@ -55,7 +68,12 @@ func buildUpdater() Scene {
 				}()
 			}
 		} else {
-			list.children[0].label = "No updates found"
+			tNoUpdatesFound := l10n.T9(&i18n.Message{
+				ID:    "NoUpdatesFound",
+				Other: "No updates found",
+			})
+
+			list.children[0].label = tNoUpdatesFound //"No updates found"
 			list.children[0].icon = "menu_exit"
 		}
 	}()
@@ -81,12 +99,15 @@ func (s *sceneUpdater) segueBack() {
 
 func (s *sceneUpdater) update(dt float32) {
 	if ludos.IsDownloading() {
-		s.children[0].label = fmt.Sprintf(
-			"Downloading update %.0f%%%%", ludos.GetProgress()*100)
+		tLudosDownload := l10n.T9(&i18n.Message{ID: "LudosDownloadUpdate", Other: "Downloading update %.0f%%%%"})
+
+		s.children[0].label = fmt.Sprintf(tLudosDownload, ludos.GetProgress()*100)
 		s.children[0].icon = "reload"
 		s.children[0].callbackOK = nil
 	} else if ludos.IsDone() {
-		s.children[0].label = "Reboot and upgrade"
+		tRebootAndUpgrade := l10n.T9(&i18n.Message{ID: "RebootAndUpgrade", Other: "Reboot and upgrade"})
+
+		s.children[0].label = tRebootAndUpgrade //"Reboot and upgrade"
 		s.children[0].icon = "reload"
 		s.children[0].callbackOK = func() {
 			cmd := exec.Command("/usr/sbin/shutdown", "-r", "now")

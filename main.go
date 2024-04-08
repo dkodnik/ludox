@@ -21,6 +21,8 @@ import (
 	"github.com/libretro/ludo/settings"
 	"github.com/libretro/ludo/state"
 	"github.com/libretro/ludo/video"
+
+	"github.com/libretro/ludo/l10n"
 )
 
 func init() {
@@ -120,6 +122,8 @@ func main() {
 	vid := video.Init(settings.Current.VideoFullscreen)
 
 	audio.Init()
+
+	l10n.Init(settings.Current.Language, settings.Current.LanguagesDirectory)
 
 	m := menu.Init(vid)
 

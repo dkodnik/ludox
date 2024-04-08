@@ -7,6 +7,9 @@ import (
 	ntf "github.com/libretro/ludo/notifications"
 	"github.com/libretro/ludo/settings"
 	"github.com/libretro/ludo/state"
+
+	"github.com/libretro/ludo/l10n"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
 var (
@@ -162,9 +165,11 @@ var combo1, combo2 int
 
 // ProcessHotkeys checks if certain keys are pressed and perform corresponding actions
 func (m *Menu) ProcessHotkeys() {
+	tConfirmDialog := l10n.T9(&i18n.Message{ID: "ConfirmDialog", Other: "Confirm Dialog"})
+
 	// Disable all hot keys on the exit dialog
 	currentScene := m.stack[len(m.stack)-1]
-	if currentScene.Entry().label == "Confirm Dialog" {
+	if currentScene.Entry().label == tConfirmDialog { //if currentScene.Entry().label == "Confirm Dialog" {
 		return
 	}
 
@@ -200,16 +205,25 @@ func (m *Menu) ProcessHotkeys() {
 		m.ContextReset()
 		err := settings.Save()
 		if err != nil {
-			ntf.DisplayAndLog(ntf.Error, "Menu", "Error saving settings: %s", err)
+			txtI18n := l10n.T9(&i18n.Message{ID: "ErrSavingSettings", Other: "Error saving settings: %s"})
+			ntf.DisplayAndLog(ntf.Error, "Menu", txtI18n, err)
 		}
 	}
 
 	if input.Pressed[0][input.ActionFastForwardToggle] == 1 && !state.MenuActive {
 		state.FastForward = !state.FastForward
 		if state.FastForward {
-			ntf.DisplayAndLog(ntf.Info, "Menu", "Fast forward ON")
+			tFastForwardON := l10n.T9(&i18n.Message{
+				ID:    "FastForwardON",
+				Other: "Fast forward ON",
+			})
+			ntf.DisplayAndLog(ntf.Info, "Menu", tFastForwardON)
 		} else {
-			ntf.DisplayAndLog(ntf.Info, "Menu", "Fast forward OFF")
+			tFastForwardOFF := l10n.T9(&i18n.Message{
+				ID:    "FastForwardOFF",
+				Other: "Fast forward OFF",
+			})
+			ntf.DisplayAndLog(ntf.Info, "Menu", tFastForwardOFF)
 		}
 	}
 

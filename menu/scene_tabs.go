@@ -3,6 +3,7 @@ package menu
 import (
 	"fmt"
 	"os"
+
 	//"os/user"
 	"sort"
 
@@ -12,14 +13,17 @@ import (
 	ntf "github.com/libretro/ludo/notifications"
 	"github.com/libretro/ludo/playlists"
 	"github.com/libretro/ludo/scanner"
+	"github.com/libretro/ludo/settings"
 	"github.com/libretro/ludo/state"
 	"github.com/libretro/ludo/utils"
 	"github.com/libretro/ludo/video"
-	"github.com/libretro/ludo/settings"
 	colorful "github.com/lucasb-eyer/go-colorful"
 
 	"github.com/tanema/gween"
 	"github.com/tanema/gween/ease"
+
+	"github.com/libretro/ludo/l10n"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
 type sceneTabs struct {
@@ -30,27 +34,36 @@ func buildTabs() Scene {
 	var list sceneTabs
 	list.label = "Ludo"
 
+	tMainMenuTab := l10n.T9(&i18n.Message{ID: "MainMenuTab", Other: "Main Menu"})
+	tMainMenuSub := l10n.T9(&i18n.Message{ID: "MainMenuSub", Other: "Load cores and games manually"})
+
 	list.children = append(list.children, entry{
-		label:    "Main Menu",
-		subLabel: "Load cores and games manually",
+		label:    tMainMenuTab, //"Main Menu",
+		subLabel: tMainMenuSub, //"Load cores and games manually",
 		icon:     "main",
 		callbackOK: func() {
 			menu.Push(buildMainMenu())
 		},
 	})
 
+	tSettingsTab := l10n.T9(&i18n.Message{ID: "SettingsTab", Other: "Settings"})
+	tSettingsSub := l10n.T9(&i18n.Message{ID: "SettingsSub", Other: "Configure Ludo"})
+
 	list.children = append(list.children, entry{
-		label:    "Settings",
-		subLabel: "Configure Ludo",
+		label:    tSettingsTab, //"Settings",
+		subLabel: tSettingsSub, //"Configure Ludo",
 		icon:     "setting",
 		callbackOK: func() {
 			menu.Push(buildSettings())
 		},
 	})
 
+	tHistoryTab := l10n.T9(&i18n.Message{ID: "HistoryTab", Other: "History"})
+	tHistorySub := l10n.T9(&i18n.Message{ID: "HistorySub", Other: "Play again"})
+
 	list.children = append(list.children, entry{
-		label:    "History",
-		subLabel: "Play again",
+		label:    tHistoryTab, //"History",
+		subLabel: tHistorySub, //"Play again",
 		icon:     "history",
 		callbackOK: func() {
 			menu.Push(buildHistory())
@@ -59,9 +72,14 @@ func buildTabs() Scene {
 
 	list.children = append(list.children, getPlaylists()...)
 
+	tAddGamesTab := l10n.T9(&i18n.Message{ID: "AddGamesTab", Other: "Add games"})
+	tAddGamesSub := l10n.T9(&i18n.Message{ID: "AddGamesSub", Other: "Scan your collection"})
+
+	tScanDir := l10n.T9(&i18n.Message{ID: "ScanDir", Other: "<Scan this directory>"})
+
 	list.children = append(list.children, entry{
-		label:    "Add games",
-		subLabel: "Scan your collection",
+		label:    tAddGamesTab, //"Add games",
+		subLabel: tAddGamesSub, //"Scan your collection",
 		icon:     "add",
 		callbackOK: func() {
 			//usr, _ := user.Current()
@@ -70,7 +88,7 @@ func buildTabs() Scene {
 					scanner.ScanDir(path, refreshTabs)
 				},
 				&entry{
-					label: "<Scan this directory>",
+					label: tScanDir, //"<Scan this directory>",
 					icon:  "scan",
 				},
 				nil,
@@ -139,6 +157,8 @@ func getPlaylists() []entry {
 	}
 	sort.Strings(keys)
 
+	txtI18nGames := l10n.T9(&i18n.Message{ID: "nGames", Other: "%d Games"})
+
 	var pls []entry
 	for _, path := range keys {
 		path := path
@@ -147,7 +167,7 @@ func getPlaylists() []entry {
 		label := playlists.ShortName(filename)
 		pls = append(pls, entry{
 			label:    label,
-			subLabel: fmt.Sprintf("%d Games", count),
+			subLabel: fmt.Sprintf(txtI18nGames, count),
 			icon:     filename,
 			callbackOK: func() {
 				menu.Push(buildPlaylist(path))
@@ -161,7 +181,8 @@ func getPlaylists() []entry {
 func deletePlaylist(path string) {
 	err := os.Remove(path)
 	if err != nil {
-		ntf.DisplayAndLog(ntf.Error, "Menu", "Could not delete playlist: %s", err.Error())
+		txtI18n := l10n.T9(&i18n.Message{ID: "CouldNotDelPlaylist", Other: "Could not delete playlist: %s"})
+		ntf.DisplayAndLog(ntf.Error, "Menu", txtI18n, err.Error())
 		return
 	}
 	menu.stack[0].Entry().ptr++
@@ -317,15 +338,20 @@ func (tabs sceneTabs) drawHintBar() {
 
 	_, _, leftRight, a, _, x, _, _, _, guide := hintIcons()
 
+	tHBarResume := l10n.T9(&i18n.Message{ID: "HBarResume", Other: "RESUME"})
+	tHBarNavigate := l10n.T9(&i18n.Message{ID: "HBarNavigate", Other: "NAVIGATE"})
+	tHBarOpen := l10n.T9(&i18n.Message{ID: "HBarOpen", Other: "OPEN"})
+	tHBarDelete := l10n.T9(&i18n.Message{ID: "HBarDelete", Other: "DELETE"})
+
 	var stack float32
 	if state.CoreRunning {
-		stackHint(&stack, guide, "RESUME", h)
+		stackHint(&stack, guide, tHBarResume, h)
 	}
-	stackHint(&stack, leftRight, "NAVIGATE", h)
-	stackHint(&stack, a, "OPEN", h)
+	stackHint(&stack, leftRight, tHBarNavigate, h)
+	stackHint(&stack, a, tHBarOpen, h)
 
 	list := menu.stack[0].Entry()
 	if list.children[list.ptr].callbackX != nil {
-		stackHint(&stack, x, "DELETE", h)
+		stackHint(&stack, x, tHBarDelete, h)
 	}
 }

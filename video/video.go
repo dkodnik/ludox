@@ -45,7 +45,7 @@ type Video struct {
 	data       unsafe.Pointer
 }
 
-// Init instanciates the video package
+// Init instantiates the video package
 func Init(fullscreen bool) *Video {
 	vid := &Video{}
 	vid.Configure(fullscreen)
@@ -84,7 +84,7 @@ func (video *Video) SetShouldClose(b bool) {
 	video.Window.SetShouldClose(b)
 }
 
-// Configure instanciates the video package
+// Configure instantiates the video package
 func (video *Video) Configure(fullscreen bool) {
 	var width, height int
 	var m *glfw.Monitor

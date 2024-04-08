@@ -1,0 +1,1 @@
+DefaultValue возвращает значение Variable по умолчанию

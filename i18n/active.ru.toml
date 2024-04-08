@@ -1,0 +1,491 @@
+[AddGamesSub]
+hash = "sha1-06d4ee99e443e6671e4ce3b163aafaee5d201ada"
+other = "Отсканировать свою коллекцию"
+
+[AddGamesTab]
+hash = "sha1-08faecbd54580b6c9af335b63b77bb09b6d9467f"
+other = "Добавить игры"
+
+[AssetsDirectory]
+hash = "sha1-f2e82567282154cf93b2c28d895ff56faef4494e"
+other = "Каталог активов(ассетов)"
+
+[AudioVolume]
+hash = "sha1-214ca97212c7acdad95f830c040c62e287a38c6e"
+other = "Громкость звука"
+
+[BluetoothService]
+hash = "sha1-c3b414887e43ebc5d686bc8947e0318546500908"
+other = "Bluetooth"
+
+[CheckingUpdates]
+hash = "sha1-98eebe039e0131a0ae2e8805f649ae1464ce8536"
+other = "Проверка обновлений"
+
+[ConfirmDialog]
+hash = "sha1-4b061dc67fec4975d7e59bd5ce106ab095113d38"
+other = "Диалог подтверждения"
+
+[CoreDiskControl]
+hash = "sha1-6e615591539910b6fcd844fe67ce874efff2003f"
+other = "Управление основным диском"
+
+[CoreLoaded]
+hash = "sha1-64a48ab0c5e9bb54513b0781f3303ae65a0190a6"
+other = "Загружено ядро: %s"
+
+[CoreNotFound]
+hash = "sha1-7da0a1137d4ce2eb174dfc8b1a84676c649711c8"
+other = "Ядро не найдено: %s"
+
+[CoreNotRunning]
+hash = "sha1-ade625adb320ed38d562ee3d5be2df5e402e99f8"
+other = "ядро не запущено"
+
+[CoreOptions]
+hash = "sha1-b21d945d4728ad38c73c8e48437f697423fd4b7f"
+other = "Основные опции"
+
+[CoresDirectory]
+hash = "sha1-12be5ded869dc0ddd5a7aaf7bad1484ebaf1db9a"
+other = "Каталог ядер"
+
+[CouldNotDelPlaylist]
+hash = "sha1-33714ec7ef83aeab089d8d3221e89494a4076cb7"
+other = "Не удалось удалить плейлист: %s"
+
+[CouldNotDelSavState]
+hash = "sha1-2acf0641cd1f3b6ad49904592fd1e33e3f237d06"
+other = "Не удалось удалить состояние сохранения: %s"
+
+[DatabaseDirectory]
+hash = "sha1-626b02384fabc960d8783dd514ca55be81440e37"
+other = "Каталог базы данных"
+
+[DiskControl]
+hash = "sha1-7accf4546293d9a528aa0c651cd3dcd074ade760"
+other = "Управление диском"
+
+[DoneDownloading]
+hash = "sha1-579b66d75f4d5023bf7fd6c415cd5d29e4207b3c"
+other = "Загрузка завершена. Теперь вы можете перезагрузить свою систему."
+
+[DoneScanning]
+hash = "sha1-46296ed76c0a49401b2bec172f4f41a7a1a5df46"
+other = "Сканирование завершено. Найдено %d новых игр(ы)."
+
+[DownloadAlreadyProgress]
+hash = "sha1-c7f2d0547a8c5d8fa0a281cbb25546f517d3a5b0"
+other = "Загрузка уже выполняется"
+
+[DownloadingUpdate0]
+hash = "sha1-4b176e7e72b6a8ae5064422b8576890859fe5d95"
+other = "Загрузка обновления 0%%"
+
+[DownloadingUpdate0f]
+hash = "sha1-f48d41355a75888ae8190fe55079031e57a7becd"
+other = "Загрузка обновления %.0f%%%% "
+
+[Empty]
+hash = "sha1-3159fe421b3221381b3c778dc1c3c26e4540be37"
+other = "Пусто"
+
+[EmptyHistory]
+hash = "sha1-6947679e7dbb6fb15dcd995bcf312dbb38374381"
+other = "Пустая история"
+
+[EmptyPlaylist]
+hash = "sha1-34db0d63fc2f27d6941f7d69bc3dc9df3f4ceeff"
+other = "Пустой плейлист"
+
+[ErrSavingSettings]
+hash = "sha1-30c2b1332eb4620d27d89f8b9d7a6e7c92f53633"
+other = "Ошибка сохранения настроек: %s"
+
+[Explorer]
+hash = "sha1-8b3ee45765e546a08be8f79f62b5e94fd8e3ac23"
+other = "Обозреватель"
+
+[FailedLoadGame]
+hash = "sha1-af2b1d8d114f2dc08552172f261b676873c3d920"
+other = "не удалось загрузить игру"
+
+[FastForwardOFF]
+hash = "sha1-fcc12262e030b3a039f20d4df1da580709fa1951"
+other = "Быстрая перемотка вперед ВЫКЛ"
+
+[FastForwardON]
+hash = "sha1-fe3f6d8007990a119707e678778dfa1544ee50d7"
+other = "Быстрая перемотка вперед ВКЛ"
+
+[FilesDirectory]
+hash = "sha1-7b2b55670822764f59cd6b3ce446f2de5ae78936"
+other = "Каталог файлов"
+
+[GameNotFound]
+hash = "sha1-10dc0e190e8fb06cf671db5c5771d492737e4f40"
+other = "Игра не найдена."
+
+[HBarBack]
+hash = "sha1-587eac1112fa27cc0682922beceef7a3a8afa60c"
+other = "НАЗАД"
+
+[HBarConnect]
+hash = "sha1-6e288959d3443bcec62386f7d9014542f6872829"
+other = "ПОДКЛЮЧИТЬ"
+
+[HBarDelete]
+hash = "sha1-d6f5636098cd458ce9d22939f8e3e8deab0e9bd0"
+other = "УДАЛИТЬ"
+
+[HBarDone]
+hash = "sha1-e782e7728e490d1aacddc0a145f6723fc825b314"
+other = "ГОТОВО"
+
+[HBarInsert]
+hash = "sha1-c20ea07e32d25c072a65368c234d6f5a88f4521a"
+other = "ВСТАВИТЬ"
+
+[HBarLoad]
+hash = "sha1-97eb8c80f7fd9d9f6120c3bffd79e5e23e575196"
+other = "ЗАГРУЗИТЬ"
+
+[HBarNavigate]
+hash = "sha1-ae0b099d27ba8bec9860068570cba4427dd80426"
+other = "НАВИГАЦИЯ"
+
+[HBarOk]
+hash = "sha1-9ce3bd4224c8c1780db56b4125ecf3f24bf748b7"
+other = "OK"
+
+[HBarOpen]
+hash = "sha1-33906a7dfdec01bb765c738946d88161600ca35d"
+other = "ОТКРЫТЬ"
+
+[HBarResume]
+hash = "sha1-a26a6ebdc97f93a42a54b4c2248b5bb303bfba29"
+other = "ПРОДОЛЖИТЬ"
+
+[HBarRun]
+hash = "sha1-ad173e04d8ecca3dab1c425136333c79954a3f23"
+other = "ЗАПУСТИТЬ"
+
+[HBarSave]
+hash = "sha1-508156a39b09ccfe61cc81d984e9317e5e0d8eec"
+other = "СОХРАНИТЬ"
+
+[HBarSelect]
+hash = "sha1-a4942c26d0735947d8a22a2fbe2735a12e381808"
+other = "SELECT"
+
+[HBarSet]
+hash = "sha1-55c5d81017a30edf1e47ba1b78c377a5e5ebfd50"
+other = "УСТАНОВИТЬ"
+
+[HBarShift]
+hash = "sha1-149b8de2b0282bcde23304b8948eaaf895a98809"
+other = "SHIFT"
+
+[History]
+hash = "sha1-90ccd6497400b5576aeca1bd94af74aae1e0a250"
+other = "История"
+
+[HistorySub]
+hash = "sha1-576766d387ec6f743649ef6ac9a2adca4be4329c"
+other = "Сыграть еще раз"
+
+[HistoryTab]
+hash = "sha1-90ccd6497400b5576aeca1bd94af74aae1e0a250"
+other = "История"
+
+[InvalidPatch]
+hash = "sha1-ba97edcb8a2470e9089fc3e99976ea85dbc30de1"
+other = "недопустимый патч"
+
+[InvalidPatchHeader]
+hash = "sha1-ca52d8e539d770527a1bd5c6d1388585f65dea97"
+other = "недопустимый заголовок патча"
+
+[InvalidSource]
+hash = "sha1-99250d84bdcaf4b535781eaa2bdaf7c35288944d"
+other = "недопустимый источник"
+
+[InvalidTarget]
+hash = "sha1-f3fce1eb4bde8e846f8987a7f668c01b30a1e0db"
+other = "недопустимая цель"
+
+[JoystickPlugged]
+hash = "sha1-dd0558e0e71204957c4136830cf2f2a429fbc502"
+other = "Джойстик #%d подключен: %s."
+
+[JoystickPluggedNotC]
+hash = "sha1-95cd587046584c1694f99389f6681ea6986a3875"
+other = "Джойстик #%d подключен: %s но не настроен."
+
+[JoystickUnhandled]
+hash = "sha1-17900b76a23e87341f892197e4de8d694f697624"
+other = "Джойстик #%d, необработанное событие: %d."
+
+[JoystickUnplugged]
+hash = "sha1-a27311b4e03a57a3617450b776ad6cfb5e49ff08"
+other = "Джойстик #%d не подключен."
+
+[Language]
+hash = "sha1-89b86ab0e66f527166d98df92ddbcf5416ed58f6"
+other = "Язык"
+
+[LanguagesDirectory]
+hash = "sha1-3e4e9591b222c790820e3b6a07055a9742d3ecb9"
+other = "Каталог языков"
+
+[LoadCore]
+hash = "sha1-bb8a24f3ed03ae1717e26bc5e2d09d988d1a2d75"
+other = "Загрузить ядро"
+
+[LoadCoreFirst]
+hash = "sha1-5274378478ad8b15b9037476a54318841cf897ea"
+other = "Пожалуйста, сначала загрузите ядро."
+
+[LoadGame]
+hash = "sha1-802aa657657737bfd17500b34e81fdcd629c8c12"
+other = "Загрузить игру"
+
+[Looking4Networks]
+hash = "sha1-293495a161b303c286d80268830d4821209803de"
+other = "Поиск сети"
+
+[LudosDownloadUpdate]
+hash = "sha1-8c194e186312e7d32af3cf3aa09724d265d2947a"
+other = "Загрузка обновления %.0f%%%%"
+
+[MainMenu]
+hash = "sha1-758da7453531e2e02d91f2c47d4b1f99518c5eab"
+other = "Главное меню"
+
+[MainMenuSub]
+hash = "sha1-8167906cdbacea795ab31aa74f3593e67538ae8e"
+other = "Загрузить ядра и игры вручную"
+
+[MainMenuTab]
+hash = "sha1-758da7453531e2e02d91f2c47d4b1f99518c5eab"
+other = "Главное меню"
+
+[MapSticksToDPad]
+hash = "sha1-4d596c79304d81141293dc5f6dfe9802260b5515"
+other = "Карта стиков к DPad"
+
+[MenuAudioVolume]
+hash = "sha1-8e66ced07f9ffdb7a7251708f142c897a6542c08"
+other = "Громкость звука в меню"
+
+[NO]
+hash = "sha1-a0509b7780628bd9d9abc7eb8a2163477341053a"
+other = "НЕТ"
+
+[NoDisk]
+hash = "sha1-258437f94f6241c3d2e95ac3060b747d6dd23cd9"
+other = "Нет диска"
+
+[NoMatchAsset]
+hash = "sha1-1add1b7a175cd7b6effae44e085eb35c12bbe091"
+other = "Нет подходящего ассета"
+
+[NoNetworkFound]
+hash = "sha1-1d21f9adaa7b57fc4663d7ec670c5b586e4fe033"
+other = "Сеть не найдена"
+
+[NoOptions]
+hash = "sha1-0f12645ace3875d6f1bf974e1f86d7263064f2b2"
+other = "Нет опций"
+
+[NoUpdatesFound]
+hash = "sha1-aab27249471b193442c6c58598167d05bcd30c2b"
+other = "Обновления не найдены"
+
+[NotDir]
+hash = "sha1-338469a733ebda5aa0e30bb1db80e0e157e51892"
+other = "Не каталог"
+
+[Options]
+hash = "sha1-6bf5da9c080bee3a8142586c412aa39971137eee"
+other = "Опции"
+
+[PatchTooSmall]
+hash = "sha1-14c5aae3858a5ebb57653803625dabd7be71be57"
+other = "патч слишком мал"
+
+[PlaylistsDirectory]
+hash = "sha1-a2ae42ebf0d4cf9df86d28e6d1026aad7f682a27"
+other = "Каталог плейлистов"
+
+[PleaseRestartLudo]
+hash = "sha1-092ed7319a9b9aa9f7b01b7facbfab7de69f8857"
+other = "Пожалуйста, перезапустите Ludo"
+
+[QuickMenu]
+hash = "sha1-ed9a0668356d53be4a70544beeb3aa24505207e3"
+other = "Быстрое меню"
+
+[Quit]
+hash = "sha1-1a2285d8881f226e13430515a9dd2b9fb6294200"
+other = "Выход"
+
+[Reboot]
+hash = "sha1-c7116629a6a855cb774d9c7c8ad822fd83c71fb5"
+other = "Перезагрузить"
+
+[RebootAndUpgrade]
+hash = "sha1-007ef4cbde5290e692cc70cfe5edff728230fbea"
+other = "Перезагрузить и обновить"
+
+[Reset]
+hash = "sha1-44c57abd888a66b36d4b7c902134063e4a097223"
+other = "Сбросить"
+
+[Resume]
+hash = "sha1-b3bd0b5a70497bec4a02b7eb1cb0d4f37eb71a2a"
+other = "Продолжить"
+
+[SSHService]
+hash = "sha1-839226786b62bf95c9258e79140ac43890ceae07"
+other = "SSH"
+
+[SambaService]
+hash = "sha1-d29dab1ea285dedbf808601b9b26d3079b5e18de"
+other = "Samba"
+
+[SaveState]
+hash = "sha1-1ee6ce42d5065f227b482f9be9c7122aa405bc43"
+other = "Сохранить состояние"
+
+[SavefilesDirectory]
+hash = "sha1-9fc7df83d156d148669ff5b83ec3da29d94f864b"
+other = "Каталог сохраненных файлов"
+
+[Savestates]
+hash = "sha1-fd42f716968011a7c0519b07878cf713ca98afee"
+other = "Сохраненные состояния"
+
+[SavestatesDirectory]
+hash = "sha1-5dcf83636217eb8930cd10a93b1da1be0e37a15c"
+other = "Каталог сохраненных состояний"
+
+[ScanDir]
+hash = "sha1-3e04d1c4a55c57397f11b9a487f624a6dd22e79b"
+other = "<Просканировать этот каталог>"
+
+[Scanning]
+hash = "sha1-928e2da6243a9f406ab9e17c4646d5866ed12ab4"
+other = "Сканирование %s"
+
+[ScreenshotsDirectory]
+hash = "sha1-dc488e05e4df7aafafa99082d52bb43063d691fe"
+other = "Каталог скриншотов"
+
+[SelectDir]
+hash = "sha1-2474cfdb9c3ef62d2e7f6a5b417facc6d095bf1e"
+other = "<Выбрать этот каталог>"
+
+[SetTo]
+hash = "sha1-e0cf68449d9ef84c2339d67138c46c2e32d50856"
+other = "%s установлено в %s"
+
+[Settings]
+hash = "sha1-c7f73bb54d928922c3838bb789ee9fb8a5b1eb37"
+other = "Настройки"
+
+[SettingsSub]
+hash = "sha1-3d968884ab48c761c08b748b8070aace4e142bc9"
+other = "Настройка Ludo"
+
+[SettingsTab]
+hash = "sha1-c7f73bb54d928922c3838bb789ee9fb8a5b1eb37"
+other = "Настройки"
+
+[ShowHiddenFiles]
+hash = "sha1-9f00f750287e5c2dfb2999831d846d80b15c66eb"
+other = "Показывать скрытые файлы"
+
+[Shutdown]
+hash = "sha1-7fddb7d8d1d60b1eeefa9af01082e0811d4b484d"
+other = "Выключить"
+
+[StateLoaded]
+hash = "sha1-4f2df908454448318c3e175cdb552d47332ab42a"
+other = "Состояние загружено."
+
+[StateSaved]
+hash = "sha1-4a21c07bb068bfd25986ef4c985e327e69f9fb05"
+other = "Состояние сохранено."
+
+[Switched2Disk]
+hash = "sha1-25712a2741ee55cc2d79096fcbc283b7c7c667e0"
+other = "Переключился на диск %d."
+
+[SystemDirectory]
+hash = "sha1-805bcda01ff55ba973ab7747df397a1793a5a97f"
+other = "Системный каталог"
+
+[TakeScreenshot]
+hash = "sha1-2aed118266e6fafd7e330fa0b5d3a71cbaae90cc"
+other = "Сделать снимок экрана"
+
+[ThumbnailsDirectory]
+hash = "sha1-d093ade6768b64b8881feb5ecc7b1cdca9334d92"
+other = "Каталог миниатюр"
+
+[TookScreenshot]
+hash = "sha1-9e1d904fd2059ee20d5356c48bfdd30ad0e42e3b"
+other = "Скриншот сделан."
+
+[Unable2GetSRAMAddress]
+hash = "sha1-a3897a86d750c7aa4db4b405f6a76a834f172ac8"
+other = "не удается получить адрес SRAM"
+
+[Up2Date]
+hash = "sha1-82fb1d5144a846f72249a3d8b21d384780514389"
+other = "Обновлено"
+
+[Updater]
+hash = "sha1-2b460630969a621383efca3df73dd6af58483efc"
+other = "Обновление"
+
+[UpdaterMenu]
+hash = "sha1-100dc35404f9cb954b8133f3fac21d2d546c1cee"
+other = "Меню обновления"
+
+[Upgrade2]
+hash = "sha1-c4bd68317d032a8cb3abf599a8dd73d916acaf01"
+other = "Обновление до "
+
+[VideoDarkMode]
+hash = "sha1-ae73794937da557c2f5615d0623829b46d19c690"
+other = "Темный режим видео"
+
+[VideoFilter]
+hash = "sha1-db859894924fc7ae14b88c7576ed6fccc659bd6b"
+other = "Видеофильтр"
+
+[VideoFullscreen]
+hash = "sha1-9a277f7ebabe05a5d250d4e8f3d44d590d10fd5b"
+other = "Видео в полноэкранном режиме"
+
+[VideoMonitorIndex]
+hash = "sha1-b88164b783a18f91ded34cef7ca3e5fa5b8ffe99"
+other = "Индекс видеомонитора"
+
+[WiFi]
+hash = "sha1-780ff71c8f1f80406725f6b9f760f6c55fb339e6"
+other = "Wi-Fi"
+
+[WiFiMenu]
+hash = "sha1-a726160d5068571ca29c09b41292b99044b66d82"
+other = "Меню Wi-Fi"
+
+[YES]
+hash = "sha1-8fff039853f5c2bbb8a28d056b579c7dcb7d137f"
+other = "ДА"
+
+[nGames]
+hash = "sha1-0cc637c04679beba401a249b697b9f746095cacd"
+other = "%d игр"

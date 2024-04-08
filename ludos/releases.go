@@ -10,6 +10,9 @@ import (
 	"github.com/cavaliercoder/grab"
 
 	ntf "github.com/libretro/ludo/notifications"
+
+	"github.com/libretro/ludo/l10n"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
 // UpdatesDir is where releases should be saved to
@@ -66,11 +69,13 @@ func FilterAssets(assets []GHAsset) *GHAsset {
 // DownloadRelease will download a LudOS release from github
 func DownloadRelease(path, url string) {
 	if downloading {
-		ntf.DisplayAndLog(ntf.Error, "Menu", "A download is already in progress")
+		txtI18n := l10n.T9(&i18n.Message{ID: "DownloadAlreadyProgress", Other: "A download is already in progress"})
+		ntf.DisplayAndLog(ntf.Error, "Menu", txtI18n)
 		return
 	}
 
-	n := ntf.DisplayAndLog(ntf.Info, "Menu", "Downloading update 0%%")
+	txtI18n := l10n.T9(&i18n.Message{ID: "DownloadingUpdate0", Other: "Downloading update 0%%"})
+	n := ntf.DisplayAndLog(ntf.Info, "Menu", txtI18n)
 	downloading = true
 	defer func() { downloading = false }()
 
@@ -89,7 +94,8 @@ Loop:
 	for {
 		select {
 		case <-t.C:
-			n.Update(ntf.Info, "Downloading update %.0f%%%% ", 100*resp.Progress())
+			txtI18n := l10n.T9(&i18n.Message{ID: "DownloadingUpdate0f", Other: "Downloading update %.0f%%%% "})
+			n.Update(ntf.Info, txtI18n, 100*resp.Progress())
 			progress = resp.Progress()
 
 		case <-resp.Done:
@@ -107,7 +113,8 @@ Loop:
 		return
 	}
 
-	n.Update(ntf.Success, "Done downloading. You can now reboot your system.")
+	txtI18n = l10n.T9(&i18n.Message{ID: "DoneDownloading", Other: "Done downloading. You can now reboot your system."})
+	n.Update(ntf.Success, txtI18n)
 }
 
 // IsDownloading returns true if the updater is currently downloading a release

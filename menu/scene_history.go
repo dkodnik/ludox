@@ -8,6 +8,9 @@ import (
 	"github.com/libretro/ludo/history"
 	ntf "github.com/libretro/ludo/notifications"
 	"github.com/libretro/ludo/state"
+
+	"github.com/libretro/ludo/l10n"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
 type sceneHistory struct {
@@ -16,7 +19,9 @@ type sceneHistory struct {
 
 func buildHistory() Scene {
 	var list sceneHistory
-	list.label = "History"
+
+	tHistory := l10n.T9(&i18n.Message{ID: "History", Other: "History"})
+	list.label = tHistory //"History"
 
 	history.Load()
 	for _, game := range history.List {
@@ -35,8 +40,10 @@ func buildHistory() Scene {
 	}
 
 	if len(history.List) == 0 {
+		tEmptyHistory := l10n.T9(&i18n.Message{ID: "EmptyHistory", Other: "Empty history"})
+
 		list.children = append(list.children, entry{
-			label: "Empty history",
+			label: tEmptyHistory, //"Empty history",
 			icon:  "subsetting",
 		})
 	}
@@ -47,12 +54,14 @@ func buildHistory() Scene {
 
 func loadHistoryEntry(list Scene, game history.Game) {
 	if _, err := os.Stat(game.Path); os.IsNotExist(err) {
-		ntf.DisplayAndLog(ntf.Error, "Menu", "Game not found.")
+		txtI18n := l10n.T9(&i18n.Message{ID: "GameNotFound", Other: "Game not found."})
+		ntf.DisplayAndLog(ntf.Error, "Menu", txtI18n)
 		return
 	}
 	corePath := game.CorePath
 	if _, err := os.Stat(corePath); os.IsNotExist(err) {
-		ntf.DisplayAndLog(ntf.Error, "Menu", "Core not found: %s", filepath.Base(corePath))
+		txtI18n := l10n.T9(&i18n.Message{ID: "CoreNotFound", Other: "Core not found: %s"})
+		ntf.DisplayAndLog(ntf.Error, "Menu", txtI18n, filepath.Base(corePath))
 		return
 	}
 	if state.CorePath != corePath {
@@ -112,8 +121,10 @@ func deleteHistoryEntry(list *sceneHistory, game history.Game) {
 	list.children = removeHistoryEntry(list.children, game)
 
 	if len(history.List) == 0 {
+		tEmptyHistory := l10n.T9(&i18n.Message{ID: "EmptyHistory", Other: "Empty history"})
+
 		list.children = append(list.children, entry{
-			label: "Empty history",
+			label: tEmptyHistory, //"Empty history",
 			icon:  "subsetting",
 		})
 	}
@@ -237,16 +248,22 @@ func (s *sceneHistory) drawHintBar() {
 
 	_, upDown, _, a, b, x, _, _, _, guide := hintIcons()
 
+	tHBarResume := l10n.T9(&i18n.Message{ID: "HBarResume", Other: "RESUME"})
+	tHBarNavigate := l10n.T9(&i18n.Message{ID: "HBarNavigate", Other: "NAVIGATE"})
+	tHBarBack := l10n.T9(&i18n.Message{ID: "HBarBack", Other: "BACK"})
+	tHBarRun := l10n.T9(&i18n.Message{ID: "HBarRun", Other: "RUN"})
+	tHBarDelete := l10n.T9(&i18n.Message{ID: "HBarDelete", Other: "DELETE"})
+
 	var stack float32
 	if state.CoreRunning {
-		stackHint(&stack, guide, "RESUME", h)
+		stackHint(&stack, guide, tHBarResume, h)
 	}
-	stackHint(&stack, upDown, "NAVIGATE", h)
-	stackHint(&stack, b, "BACK", h)
-	stackHint(&stack, a, "RUN", h)
+	stackHint(&stack, upDown, tHBarNavigate, h)
+	stackHint(&stack, b, tHBarBack, h)
+	stackHint(&stack, a, tHBarRun, h)
 
 	list := menu.stack[len(menu.stack)-1].Entry()
 	if list.children[list.ptr].callbackX != nil {
-		stackHint(&stack, x, "DELETE", h)
+		stackHint(&stack, x, tHBarDelete, h)
 	}
 }

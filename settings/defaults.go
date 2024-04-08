@@ -1,8 +1,9 @@
 package settings
 
 import (
-	"path/filepath"
 	"os/user"
+	"path/filepath"
+
 	"github.com/adrg/xdg"
 )
 
@@ -59,6 +60,7 @@ func defaultSettings() Settings {
 			"SNK - Neo Geo Pocket":                           "mednafen_ngp_libretro",
 			"Sony - PlayStation":                             playstationCore,
 		},
+		Language:             "en",
 		FileDirectory:        usr.HomeDir,
 		CoresDirectory:       "./cores",
 		AssetsDirectory:      "./assets",
@@ -69,5 +71,6 @@ func defaultSettings() Settings {
 		SystemDirectory:      filepath.Join(xdg.DataHome, "ludo", "system"),
 		PlaylistsDirectory:   filepath.Join(xdg.DataHome, "ludo", "playlists"),
 		ThumbnailsDirectory:  filepath.Join(xdg.DataHome, "ludo", "thumbnails"),
+		LanguagesDirectory:   "./i18n",
 	}
 }

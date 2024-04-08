@@ -1,0 +1,1 @@
+Desc - возвращает имя CoreOptionDefinition в виде строки.

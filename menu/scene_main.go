@@ -11,6 +11,9 @@ import (
 	"github.com/libretro/ludo/settings"
 	"github.com/libretro/ludo/state"
 	"github.com/libretro/ludo/utils"
+
+	"github.com/libretro/ludo/l10n"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
 type sceneMain struct {
@@ -63,13 +66,18 @@ func prettifyCoreName(in string) string {
 
 func buildMainMenu() Scene {
 	var list sceneMain
-	list.label = "Main Menu"
+
+	tMainMenu := l10n.T9(&i18n.Message{ID: "MainMenu", Other: "Main Menu"})
+
+	list.label = tMainMenu //"Main Menu"
 
 	usr, _ := user.Current()
 
+	tQuickMenu := l10n.T9(&i18n.Message{ID: "QuickMenu", Other: "Quick Menu"})
+
 	if state.CoreRunning {
 		list.children = append(list.children, entry{
-			label: "Quick Menu",
+			label: tQuickMenu, //"Quick Menu",
 			icon:  "subsetting",
 			callbackOK: func() {
 				list.segueNext()
@@ -78,8 +86,10 @@ func buildMainMenu() Scene {
 		})
 	}
 
+	tLoadCore := l10n.T9(&i18n.Message{ID: "LoadCore", Other: "Load Core"})
+
 	list.children = append(list.children, entry{
-		label: "Load Core",
+		label: tLoadCore, //"Load Core",
 		icon:  "subsetting",
 		callbackOK: func() {
 			list.segueNext()
@@ -93,8 +103,10 @@ func buildMainMenu() Scene {
 		},
 	})
 
+	tLoadGame := l10n.T9(&i18n.Message{ID: "LoadGame", Other: "Load Game"})
+
 	list.children = append(list.children, entry{
-		label: "Load Game",
+		label: tLoadGame, //"Load Game",
 		icon:  "subsetting",
 		callbackOK: func() {
 			if state.Core != nil {
@@ -107,14 +119,21 @@ func buildMainMenu() Scene {
 					nil,
 				))
 			} else {
-				ntf.DisplayAndLog(ntf.Warning, "Menu", "Please load a core first.")
+				txtI18n := l10n.T9(&i18n.Message{
+					ID:    "LoadCoreFirst",
+					Other: "Please load a core first.",
+				})
+
+				ntf.DisplayAndLog(ntf.Warning, "Menu", txtI18n) //"Please load a core first.")
 			}
 		},
 	})
 
 	if state.LudOS {
+		tUpdater := l10n.T9(&i18n.Message{ID: "Updater", Other: "Updater"})
+
 		list.children = append(list.children, entry{
-			label: "Updater",
+			label: tUpdater, //"Updater",
 			icon:  "subsetting",
 			callbackOK: func() {
 				list.segueNext()
@@ -122,24 +141,30 @@ func buildMainMenu() Scene {
 			},
 		})
 
+		tReboot := l10n.T9(&i18n.Message{ID: "Reboot", Other: "Reboot"})
+
 		list.children = append(list.children, entry{
-			label: "Reboot",
+			label: tReboot, //"Reboot",
 			icon:  "subsetting",
 			callbackOK: func() {
 				askQuitConfirmation(func() { cleanReboot() })
 			},
 		})
 
+		tShutdown := l10n.T9(&i18n.Message{ID: "Shutdown", Other: "Shutdown"})
+
 		list.children = append(list.children, entry{
-			label: "Shutdown",
+			label: tShutdown, //"Shutdown",
 			icon:  "subsetting",
 			callbackOK: func() {
 				askQuitConfirmation(func() { cleanShutdown() })
 			},
 		})
 	} else {
+		tQuit := l10n.T9(&i18n.Message{ID: "Quit", Other: "Quit"})
+
 		list.children = append(list.children, entry{
-			label: "Quit",
+			label: tQuit, //"Quit",
 			icon:  "subsetting",
 			callbackOK: func() {
 				askQuitConfirmation(func() {
@@ -160,7 +185,8 @@ func coreExplorerCb(path string) {
 		ntf.DisplayAndLog(ntf.Error, "Core", err.Error())
 		return
 	}
-	ntf.DisplayAndLog(ntf.Success, "Core", "Core loaded: %s", filepath.Base(path))
+	txtI18n := l10n.T9(&i18n.Message{ID: "CoreLoaded", Other: "Core loaded: %s"})
+	ntf.DisplayAndLog(ntf.Success, "Core", txtI18n, filepath.Base(path))
 }
 
 // triggered when a game is selected in the file explorer of Load Game

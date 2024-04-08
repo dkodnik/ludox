@@ -5,6 +5,9 @@ import (
 
 	ntf "github.com/libretro/ludo/notifications"
 	"github.com/libretro/ludo/state"
+
+	"github.com/libretro/ludo/l10n"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
 type sceneCoreDiskControl struct {
@@ -13,7 +16,10 @@ type sceneCoreDiskControl struct {
 
 func buildCoreDiskControl() Scene {
 	var list sceneCoreDiskControl
-	list.label = "Core Disk Control"
+
+	tCoreDiskControl := l10n.T9(&i18n.Message{ID: "CoreDiskControl", Other: "Core Disk Control"})
+
+	list.label = tCoreDiskControl //"Core Disk Control"
 
 	for i := uint(0); i < state.Core.DiskControlCallback.GetNumImages(); i++ {
 		index := i
@@ -33,15 +39,19 @@ func buildCoreDiskControl() Scene {
 				state.Core.DiskControlCallback.SetEjectState(true)
 				state.Core.DiskControlCallback.SetImageIndex(index)
 				state.Core.DiskControlCallback.SetEjectState(false)
-				ntf.DisplayAndLog(ntf.Success, "Menu", "Switched to disk %d.", index+1)
+
+				txtI18n := l10n.T9(&i18n.Message{ID: "Switched2Disk", Other: "Switched to disk %d."})
+				ntf.DisplayAndLog(ntf.Success, "Menu", txtI18n, index+1)
 				state.MenuActive = false
 			},
 		})
 	}
 
+	tNoDisk := l10n.T9(&i18n.Message{ID: "NoDisk", Other: "No disk"})
+
 	if len(list.children) == 0 {
 		list.children = append(list.children, entry{
-			label: "No disk",
+			label: tNoDisk, //"No disk",
 			icon:  "subsetting",
 		})
 	}
@@ -81,11 +91,16 @@ func (s *sceneCoreDiskControl) drawHintBar() {
 
 	_, upDown, leftRight, _, b, _, _, _, _, guide := hintIcons()
 
+	tHBarResume := l10n.T9(&i18n.Message{ID: "HBarResume", Other: "RESUME"})
+	tHBarNavigate := l10n.T9(&i18n.Message{ID: "HBarNavigate", Other: "NAVIGATE"})
+	tHBarBack := l10n.T9(&i18n.Message{ID: "HBarBack", Other: "BACK"})
+	tHBarSet := l10n.T9(&i18n.Message{ID: "HBarSet", Other: "SET"})
+
 	var stack float32
 	if state.CoreRunning {
-		stackHint(&stack, guide, "RESUME", h)
+		stackHint(&stack, guide, tHBarResume, h)
 	}
-	stackHint(&stack, upDown, "NAVIGATE", h)
-	stackHint(&stack, b, "BACK", h)
-	stackHint(&stack, leftRight, "SET", h)
+	stackHint(&stack, upDown, tHBarNavigate, h)
+	stackHint(&stack, b, tHBarBack, h)
+	stackHint(&stack, leftRight, tHBarSet, h)
 }

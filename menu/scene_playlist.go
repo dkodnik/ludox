@@ -13,6 +13,9 @@ import (
 	"github.com/libretro/ludo/settings"
 	"github.com/libretro/ludo/state"
 	"github.com/libretro/ludo/utils"
+
+	"github.com/libretro/ludo/l10n"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
 type scenePlaylist struct {
@@ -42,8 +45,10 @@ func buildPlaylist(path string) Scene {
 	}
 
 	if len(playlists.Playlists[path]) == 0 {
+		tEmptyPlaylist := l10n.T9(&i18n.Message{ID: "EmptyPlaylist", Other: "Empty playlist"})
+
 		list.children = append(list.children, entry{
-			label: "Empty playlist",
+			label: tEmptyPlaylist, //"Empty playlist",
 			icon:  "subsetting",
 		})
 	}
@@ -89,7 +94,8 @@ func extractTags(name string) (string, []string) {
 
 func loadPlaylistEntry(list *scenePlaylist, playlist string, game playlists.Game) {
 	if _, err := os.Stat(game.Path); os.IsNotExist(err) {
-		ntf.DisplayAndLog(ntf.Error, "Menu", "Game not found.")
+		txtI18n := l10n.T9(&i18n.Message{ID: "GameNotFound", Other: "Game not found."})
+		ntf.DisplayAndLog(ntf.Error, "Menu", txtI18n)
 		return
 	}
 	corePath, err := settings.CoreForPlaylist(playlist)
@@ -98,7 +104,8 @@ func loadPlaylistEntry(list *scenePlaylist, playlist string, game playlists.Game
 		return
 	}
 	if _, err := os.Stat(corePath); os.IsNotExist(err) {
-		ntf.DisplayAndLog(ntf.Error, "Menu", "Core not found: %s", filepath.Base(corePath))
+		txtI18n := l10n.T9(&i18n.Message{ID: "CoreNotFound", Other: "Core not found: %s"})
+		ntf.DisplayAndLog(ntf.Error, "Menu", txtI18n, filepath.Base(corePath))
 		return
 	}
 	if state.CorePath != corePath {
@@ -156,8 +163,13 @@ func deletePlaylistEntry(list *scenePlaylist, path string, game playlists.Game) 
 	list.children = removePlaylistEntry(list.children, game)
 
 	if len(playlists.Playlists[path]) == 0 {
+		tEmptyPlaylist := l10n.T9(&i18n.Message{
+			ID:    "EmptyPlaylist",
+			Other: "Empty playlist",
+		})
+
 		list.children = append(list.children, entry{
-			label: "Empty playlist",
+			label: tEmptyPlaylist, //"Empty playlist",
 			icon:  "subsetting",
 		})
 	}
@@ -269,16 +281,22 @@ func (s *scenePlaylist) drawHintBar() {
 
 	_, upDown, _, a, b, x, _, _, _, guide := hintIcons()
 
+	tHBarResume := l10n.T9(&i18n.Message{ID: "HBarResume", Other: "RESUME"})
+	tHBarNavigate := l10n.T9(&i18n.Message{ID: "HBarNavigate", Other: "NAVIGATE"})
+	tHBarBack := l10n.T9(&i18n.Message{ID: "HBarBack", Other: "BACK"})
+	tHBarRun := l10n.T9(&i18n.Message{ID: "HBarRun", Other: "RUN"})
+	tHBarDelete := l10n.T9(&i18n.Message{ID: "HBarDelete", Other: "DELETE"})
+
 	var stack float32
 	if state.CoreRunning {
-		stackHint(&stack, guide, "RESUME", h)
+		stackHint(&stack, guide, tHBarResume, h)
 	}
-	stackHint(&stack, upDown, "NAVIGATE", h)
-	stackHint(&stack, b, "BACK", h)
-	stackHint(&stack, a, "RUN", h)
+	stackHint(&stack, upDown, tHBarNavigate, h)
+	stackHint(&stack, b, tHBarBack, h)
+	stackHint(&stack, a, tHBarRun, h)
 
 	list := menu.stack[len(menu.stack)-1].Entry()
 	if list.children[list.ptr].callbackX != nil {
-		stackHint(&stack, x, "DELETE", h)
+		stackHint(&stack, x, tHBarDelete, h)
 	}
 }

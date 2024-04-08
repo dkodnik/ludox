@@ -62,7 +62,7 @@ import (
 	"unsafe"
 )
 
-// GameGeometry represents the geometry of a game, with its aspect ratio, with and height
+// GameGeometry represents the geometry of a game, width its aspect ratio, with and height
 type GameGeometry struct {
 	AspectRatio float64
 	BaseWidth   int
@@ -270,7 +270,7 @@ const (
 	DeviceKeyboard = uint32(C.RETRO_DEVICE_KEYBOARD)
 
 	// DeviceLightgun X/Y coordinates are reported relatively to last poll,
-	// similar to mouse. */
+	// similar to mouse.
 	DeviceLightgun = uint32(C.RETRO_DEVICE_LIGHTGUN)
 
 	// DeviceAnalog device is an extension to JOYPAD (RetroPad).

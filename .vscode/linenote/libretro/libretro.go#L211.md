@@ -1,0 +1,1 @@
+DefaultValue - возвращает значение по умолчанию для CoreOptionDefinition в виде строки

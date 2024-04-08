@@ -22,8 +22,9 @@ type Menu struct {
 	scroll float32
 	ratio  float32
 	t      float64
+	//l      *l10n.Lng
 
-	*video.Video // we embbed video here to have direct access to drawing functions
+	*video.Video // we embed video here to have direct access to drawing functions
 }
 
 // Init initializes the menu.
@@ -38,6 +39,8 @@ func Init(v *video.Video) *Menu {
 	menu.tweens = make(Tweens)
 	menu.ratio = float32(w) / 1920
 	menu.icons = map[string]uint32{}
+
+	//menu.l = l
 
 	menu.Push(buildTabs())
 

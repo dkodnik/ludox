@@ -14,6 +14,9 @@ import (
 	"github.com/libretro/ludo/settings"
 	"github.com/libretro/ludo/state"
 	"github.com/libretro/ludo/utils"
+
+	"github.com/libretro/ludo/l10n"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
 type sceneSettings struct {
@@ -31,11 +34,12 @@ func isHidden(f *structs.Field) bool {
 
 func buildSettings() Scene {
 	var list sceneSettings
-	list.label = "Settings"
+
+	list.label = l10n.T9(&i18n.Message{ID: "Settings", Other: "Settings"})
 
 	if state.LudOS {
 		list.children = append(list.children, entry{
-			label:       "Wi-Fi",
+			label:       l10n.T9(&i18n.Message{ID: "WiFi", Other: "Wi-Fi"}),
 			icon:        "subsetting",
 			stringValue: func() string { return ludos.CurrentNetwork.SSID },
 			callbackOK: func() {
@@ -44,6 +48,8 @@ func buildSettings() Scene {
 			},
 		})
 	}
+
+	tSelectDir := l10n.T9(&i18n.Message{ID: "SelectDir", Other: "<Select this directory>"})
 
 	fields := structs.Fields(&settings.Current)
 	for _, f := range fields {
@@ -56,7 +62,7 @@ func buildSettings() Scene {
 		if f.Tag("widget") == "dir" {
 			// Directory settings
 			list.children = append(list.children, entry{
-				label: f.Tag("label"),
+				label: settings.SettingLabel(f.Tag("toml")),
 				icon:  "folder",
 				value: f.Value,
 				stringValue: func() string {
@@ -70,7 +76,7 @@ func buildSettings() Scene {
 						nil,
 						func(path string) { dirExplorerCb(path, f) },
 						&entry{
-							label: "<Select this directory>",
+							label: tSelectDir,
 							icon:  "scan",
 						},
 						nil,
@@ -80,7 +86,7 @@ func buildSettings() Scene {
 		} else {
 			// Regular settings
 			list.children = append(list.children, entry{
-				label: f.Tag("label"),
+				label: settings.SettingLabel(f.Tag("toml")),
 				icon:  "subsetting",
 				incr: func(direction int) {
 					incrCallbacks[f.Name()](f, direction)
@@ -113,11 +119,13 @@ func dirExplorerCb(path string, f *structs.Field) {
 		return
 	}
 	if !info.IsDir() {
-		ntf.DisplayAndLog(ntf.Error, "Settings", "Not a directory")
+		txtI18n := l10n.T9(&i18n.Message{ID: "NotDir", Other: "Not a directory"})
+		ntf.DisplayAndLog(ntf.Error, "Settings", txtI18n)
 		return
 	}
 	f.Set(path)
-	ntf.DisplayAndLog(ntf.Success, "Settings", "%s set to %s", f.Tag("label"), f.Value().(string))
+	txtI18n := l10n.T9(&i18n.Message{ID: "SetTo", Other: "%s set to %s"})
+	ntf.DisplayAndLog(ntf.Success, "Settings", txtI18n, settings.SettingLabel(f.Tag("toml")), f.Value().(string))
 	err = settings.Save()
 	if err != nil {
 		ntf.DisplayAndLog(ntf.Error, "Settings", err.Error())
@@ -142,7 +150,7 @@ var widgets = map[string]func(*entry){
 			1.25, textColor.Alpha(e.iconAlpha))
 	},
 
-	// Range widget for audio volume and similat float settings
+	// Range widget for audio volume and similar float settings
 	"range": func(e *entry) {
 		fbw, fbh := menu.GetFramebufferSize()
 		x := float32(fbw) - 128*menu.ratio - 175*menu.ratio
@@ -196,6 +204,28 @@ var incrCallbacks = map[string]callbackIncrement{
 		f.Set(filters[i])
 		menu.UpdateFilter(filters[i])
 		settings.Save()
+	},
+	"Language": func(f *structs.Field, direction int) {
+		filters := []string{"en", "ru"}
+		v := f.Value().(string)
+		i := utils.IndexOfString(v, filters)
+		i += direction
+		if i < 0 {
+			i = len(filters) - 1
+		}
+		if i > len(filters)-1 {
+			i = 0
+		}
+		f.Set(filters[i])
+
+		l10n.ReInit(filters[i])
+		settings.Save()
+
+		tPleaseRestartLudo := l10n.T9(&i18n.Message{
+			ID:    "PleaseRestartLudo",
+			Other: "Please restart Ludo",
+		})
+		ntf.DisplayAndLog(ntf.Info, "Settings", tPleaseRestartLudo)
 	},
 	"VideoDarkMode": func(f *structs.Field, direction int) {
 		v := f.Value().(bool)
@@ -278,16 +308,21 @@ func (s *sceneSettings) drawHintBar() {
 
 	_, upDown, leftRight, a, b, _, _, _, _, guide := hintIcons()
 
+	tHBarResume := l10n.T9(&i18n.Message{ID: "HBarResume", Other: "RESUME"})
+	tHBarNavigate := l10n.T9(&i18n.Message{ID: "HBarNavigate", Other: "NAVIGATE"})
+	tHBarBack := l10n.T9(&i18n.Message{ID: "HBarBack", Other: "BACK"})
+	tHBarSet := l10n.T9(&i18n.Message{ID: "HBarSet", Other: "SET"})
+
 	var stack float32
 	list := menu.stack[len(menu.stack)-1].Entry()
 	if state.CoreRunning {
-		stackHint(&stack, guide, "RESUME", h)
+		stackHint(&stack, guide, tHBarResume, h)
 	}
-	stackHint(&stack, upDown, "NAVIGATE", h)
-	stackHint(&stack, b, "BACK", h)
+	stackHint(&stack, upDown, tHBarNavigate, h)
+	stackHint(&stack, b, tHBarBack, h)
 	if list.children[list.ptr].callbackOK != nil {
-		stackHint(&stack, a, "SET", h)
+		stackHint(&stack, a, tHBarSet, h)
 	} else {
-		stackHint(&stack, leftRight, "SET", h)
+		stackHint(&stack, leftRight, tHBarSet, h)
 	}
 }

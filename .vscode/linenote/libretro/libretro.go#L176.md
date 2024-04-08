@@ -1,0 +1,1 @@
+Info - возвращает подробное описание CoreOptionDefinition в виде строки.

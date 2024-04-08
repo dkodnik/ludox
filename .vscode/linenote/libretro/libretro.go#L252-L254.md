@@ -1,0 +1,1 @@
+DeviceJoypad представляет собой RetroPad. По сути, это контроллер Super Nintendo, но с дополнительными кнопками L2/R2/L3/R3, похожий на PS1 DualShock.

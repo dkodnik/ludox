@@ -4,6 +4,9 @@ import (
 	"github.com/libretro/ludo/state"
 	"github.com/tanema/gween"
 	"github.com/tanema/gween/ease"
+
+	"github.com/libretro/ludo/l10n"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
 // entry is a menu entry. It can also represent a scene.
@@ -268,11 +271,16 @@ func genericDrawHintBar() {
 
 	_, upDown, _, a, b, _, _, _, _, guide := hintIcons()
 
+	tHBarResume := l10n.T9(&i18n.Message{ID: "HBarResume", Other: "RESUME"})
+	tHBarNavigate := l10n.T9(&i18n.Message{ID: "HBarNavigate", Other: "NAVIGATE"})
+	tHBarBack := l10n.T9(&i18n.Message{ID: "HBarBack", Other: "BACK"})
+	tHBarOk := l10n.T9(&i18n.Message{ID: "HBarOk", Other: "OK"})
+
 	var stack float32
 	if state.CoreRunning {
-		stackHint(&stack, guide, "RESUME", h)
+		stackHint(&stack, guide, tHBarResume, h)
 	}
-	stackHint(&stack, upDown, "NAVIGATE", h)
-	stackHint(&stack, b, "BACK", h)
-	stackHint(&stack, a, "OK", h)
+	stackHint(&stack, upDown, tHBarNavigate, h)
+	stackHint(&stack, b, tHBarBack, h)
+	stackHint(&stack, a, tHBarOk, h)
 }
