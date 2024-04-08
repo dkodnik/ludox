@@ -3,6 +3,9 @@ package menu
 import (
 	"github.com/libretro/ludo/ludos"
 	ntf "github.com/libretro/ludo/notifications"
+
+	"github.com/libretro/ludo/l10n"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
 type sceneWiFi struct {
@@ -11,10 +14,15 @@ type sceneWiFi struct {
 
 func buildWiFi() Scene {
 	var list sceneWiFi
-	list.label = "WiFi Menu"
+
+	tWiFiMenu := l10n.T9(&i18n.Message{ID: "WiFiMenu", Other: "WiFi Menu"})
+
+	list.label = tWiFiMenu //"WiFi Menu"
+
+	tLooking4Networks := l10n.T9(&i18n.Message{ID: "Looking4Networks", Other: "Looking for networks"})
 
 	list.children = append(list.children, entry{
-		label: "Looking for networks",
+		label: tLooking4Networks, //"Looking for networks",
 		icon:  "reload",
 	})
 
@@ -52,7 +60,9 @@ func buildWiFi() Scene {
 				menu.tweens.FastForward()
 			}
 		} else {
-			list.children[0].label = "No network found"
+			tNoNetworkFound := l10n.T9(&i18n.Message{ID: "NoNetworkFound", Other: "No network found"})
+
+			list.children[0].label = tNoNetworkFound //"No network found"
 			list.children[0].icon = "close"
 		}
 	}()
@@ -90,10 +100,14 @@ func (s *sceneWiFi) drawHintBar() {
 
 	_, upDown, _, a, b, _, _, _, _, _ := hintIcons()
 
+	tHBarNavigate := l10n.T9(&i18n.Message{ID: "HBarNavigate", Other: "NAVIGATE"})
+	tHBarBack := l10n.T9(&i18n.Message{ID: "HBarBack", Other: "BACK"})
+	tHBarConnect := l10n.T9(&i18n.Message{ID: "HBarConnect", Other: "CONNECT"})
+
 	var stack float32
-	stackHint(&stack, upDown, "NAVIGATE", h)
-	stackHint(&stack, b, "BACK", h)
+	stackHint(&stack, upDown, tHBarNavigate, h)
+	stackHint(&stack, b, tHBarBack, h)
 	if s.children[0].callbackOK != nil {
-		stackHint(&stack, a, "CONNECT", h)
+		stackHint(&stack, a, tHBarConnect, h)
 	}
 }

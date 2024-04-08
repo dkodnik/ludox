@@ -4,6 +4,9 @@ import (
 	ntf "github.com/libretro/ludo/notifications"
 	"github.com/libretro/ludo/state"
 	"github.com/libretro/ludo/utils"
+
+	"github.com/libretro/ludo/l10n"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
 type sceneQuick struct {
@@ -12,10 +15,15 @@ type sceneQuick struct {
 
 func buildQuickMenu() Scene {
 	var list sceneQuick
-	list.label = "Quick Menu"
+
+	tQuickMenu := l10n.T9(&i18n.Message{ID: "QuickMenu", Other: "Quick Menu"})
+
+	list.label = tQuickMenu //"Quick Menu"
+
+	tResume := l10n.T9(&i18n.Message{ID: "Resume", Other: "Resume"})
 
 	list.children = append(list.children, entry{
-		label: "Resume",
+		label: tResume, //"Resume",
 		icon:  "resume",
 		callbackOK: func() {
 			state.MenuActive = false
@@ -23,8 +31,10 @@ func buildQuickMenu() Scene {
 		},
 	})
 
+	tReset := l10n.T9(&i18n.Message{ID: "Reset", Other: "Reset"})
+
 	list.children = append(list.children, entry{
-		label: "Reset",
+		label: tReset, //"Reset",
 		icon:  "reset",
 		callbackOK: func() {
 			state.Core.Reset()
@@ -33,8 +43,10 @@ func buildQuickMenu() Scene {
 		},
 	})
 
+	tSavestates := l10n.T9(&i18n.Message{ID: "Savestates", Other: "Savestates"})
+
 	list.children = append(list.children, entry{
-		label: "Savestates",
+		label: tSavestates, //"Savestates",
 		icon:  "states",
 		callbackOK: func() {
 			list.segueNext()
@@ -42,8 +54,10 @@ func buildQuickMenu() Scene {
 		},
 	})
 
+	tTakeScreenshot := l10n.T9(&i18n.Message{ID: "TakeScreenshot", Other: "Take Screenshot"})
+
 	list.children = append(list.children, entry{
-		label: "Take Screenshot",
+		label: tTakeScreenshot, //"Take Screenshot",
 		icon:  "screenshot",
 		callbackOK: func() {
 			name := utils.DatedName(state.GamePath)
@@ -51,13 +65,16 @@ func buildQuickMenu() Scene {
 			if err != nil {
 				ntf.DisplayAndLog(ntf.Error, "Menu", err.Error())
 			} else {
-				ntf.DisplayAndLog(ntf.Success, "Menu", "Took a screenshot.")
+				txtI18n := l10n.T9(&i18n.Message{ID: "TookScreenshot", Other: "Took a screenshot."})
+				ntf.DisplayAndLog(ntf.Success, "Menu", txtI18n)
 			}
 		},
 	})
 
+	tOptions := l10n.T9(&i18n.Message{ID: "Options", Other: "Options"})
+
 	list.children = append(list.children, entry{
-		label: "Options",
+		label: tOptions, //"Options",
 		icon:  "subsetting",
 		callbackOK: func() {
 			list.segueNext()
@@ -65,9 +82,11 @@ func buildQuickMenu() Scene {
 		},
 	})
 
+	tDiskControl := l10n.T9(&i18n.Message{ID: "DiskControl", Other: "Disk Control"})
+
 	if state.Core != nil && state.Core.DiskControlCallback != nil {
 		list.children = append(list.children, entry{
-			label: "Disk Control",
+			label: tDiskControl, //"Disk Control",
 			icon:  "core-disk-options",
 			callbackOK: func() {
 				list.segueNext()

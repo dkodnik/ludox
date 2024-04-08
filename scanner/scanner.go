@@ -18,6 +18,9 @@ import (
 	"github.com/libretro/ludo/settings"
 	"github.com/libretro/ludo/state"
 	"github.com/libretro/ludo/utils"
+
+	"github.com/libretro/ludo/l10n"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
 // LoadDB loops over the RDBs in a given directory and parses them
@@ -41,7 +44,8 @@ func LoadDB(dir string) (dat.DB, error) {
 
 // ScanDir scans a full directory, report progress and generate playlists
 func ScanDir(dir string, doneCb func()) {
-	n := ntf.DisplayAndLog(ntf.Info, "Menu", "Scanning %s", dir)
+	txtI18n := l10n.T9(&i18n.Message{ID: "Scanning", Other: "Scanning %s"})
+	n := ntf.DisplayAndLog(ntf.Info, "Menu", txtI18n, dir)
 	roms, err := utils.AllFilesIn(dir)
 	if err != nil {
 		n.Update(ntf.Error, err.Error())
@@ -71,7 +75,8 @@ func ScanDir(dir string, doneCb func()) {
 			i++
 		}
 		doneCb()
-		n.Update(ntf.Success, "Done scanning. %d new games found.", i)
+		txtI18n := l10n.T9(&i18n.Message{ID: "DoneScanning", Other: "Done scanning. %d new games found."})
+		n.Update(ntf.Success, txtI18n, i)
 	}()
 }
 

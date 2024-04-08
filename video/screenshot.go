@@ -29,7 +29,7 @@ func (video *Video) renderScreenshot() {
 	gl.DrawArrays(gl.TRIANGLE_STRIP, 0, 4)
 }
 
-// TakeScreenshot captures the ouput of video.Render and writes it to a file
+// TakeScreenshot captures the output of video.Render and writes it to a file
 func (video *Video) TakeScreenshot(name string) error {
 	state.MenuActive = false
 	defer func() { state.MenuActive = true }()

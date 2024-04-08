@@ -14,6 +14,9 @@ import (
 	"github.com/libretro/ludo/settings"
 	"github.com/libretro/ludo/state"
 	"github.com/libretro/ludo/utils"
+
+	"github.com/libretro/ludo/l10n"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
 var mutex sync.Mutex
@@ -31,13 +34,15 @@ func SaveSRAM() error {
 	defer mutex.Unlock()
 
 	if !state.CoreRunning {
-		return errors.New("core not running")
+		txtI18n := l10n.T9(&i18n.Message{ID: "CoreNotRunning", Other: "core not running"})
+		return errors.New(txtI18n)
 	}
 
 	len := state.Core.GetMemorySize(libretro.MemorySaveRAM)
 	ptr := state.Core.GetMemoryData(libretro.MemorySaveRAM)
 	if ptr == nil || len == 0 {
-		return errors.New("unable to get SRAM address")
+		txtI18n := l10n.T9(&i18n.Message{ID: "Unable2GetSRAMAddress", Other: "unable to get SRAM address"})
+		return errors.New(txtI18n)
 	}
 
 	// convert the C array to a go slice
@@ -66,19 +71,21 @@ func SaveSRAM() error {
 	return fd.Sync()
 }
 
-// LoadSRAM saves the game SRAM to the filesystem
+// LoadSRAM load the game SRAM from the filesystem
 func LoadSRAM() error {
 	mutex.Lock()
 	defer mutex.Unlock()
 
 	if !state.CoreRunning {
-		return errors.New("core not running")
+		txtI18n := l10n.T9(&i18n.Message{ID: "CoreNotRunning", Other: "core not running"})
+		return errors.New(txtI18n)
 	}
 
 	len := state.Core.GetMemorySize(libretro.MemorySaveRAM)
 	ptr := state.Core.GetMemoryData(libretro.MemorySaveRAM)
 	if ptr == nil || len == 0 {
-		return errors.New("unable to get SRAM address")
+		txtI18n := l10n.T9(&i18n.Message{ID: "Unable2GetSRAMAddress", Other: "unable to get SRAM address"})
+		return errors.New(txtI18n)
 	}
 
 	// this *[1 << 30]byte points to the same memory as ptr, allowing to

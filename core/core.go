@@ -1,4 +1,4 @@
-// Package core takes care of instanciating the libretro core, setting the
+// Package core takes care of instantiating the libretro core, setting the
 // input, audio, video, environment callbacks needed to play the games.
 // It also deals with core options and persisting SRAM periodically.
 package core
@@ -21,6 +21,9 @@ import (
 	"github.com/libretro/ludo/video"
 
 	"github.com/mholt/archiver/v3"
+
+	"github.com/libretro/ludo/l10n"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
 var vid *video.Video
@@ -171,7 +174,8 @@ func LoadGame(gamePath string) error {
 	ok := state.Core.LoadGame(*gi)
 	if !ok {
 		state.CoreRunning = false
-		return errors.New("failed to load the game")
+		txtI18n := l10n.T9(&i18n.Message{ID: "FailedLoadGame", Other: "failed to load the game"})
+		return errors.New(txtI18n)
 	}
 
 	avi := state.Core.GetSystemAVInfo()

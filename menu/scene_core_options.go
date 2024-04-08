@@ -6,6 +6,9 @@ import (
 	"github.com/libretro/ludo/core"
 	ntf "github.com/libretro/ludo/notifications"
 	"github.com/libretro/ludo/state"
+
+	"github.com/libretro/ludo/l10n"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
 type sceneCoreOptions struct {
@@ -14,11 +17,16 @@ type sceneCoreOptions struct {
 
 func buildCoreOptions() Scene {
 	var list sceneCoreOptions
-	list.label = "Core Options"
+
+	tCoreOptions := l10n.T9(&i18n.Message{ID: "CoreOptions", Other: "Core Options"})
+
+	list.label = tCoreOptions //"Core Options"
 
 	if core.Options == nil {
+		tNoOptions := l10n.T9(&i18n.Message{ID: "NoOptions", Other: "No options"})
+
 		list.children = append(list.children, entry{
-			label: "No options",
+			label: tNoOptions, //"No options",
 			icon:  "subsetting",
 		})
 		list.segueMount()
@@ -85,11 +93,16 @@ func (s *sceneCoreOptions) drawHintBar() {
 
 	_, upDown, leftRight, _, b, _, _, _, _, guide := hintIcons()
 
+	tHBarResume := l10n.T9(&i18n.Message{ID: "HBarResume", Other: "RESUME"})
+	tHBarNavigate := l10n.T9(&i18n.Message{ID: "HBarNavigate", Other: "NAVIGATE"})
+	tHBarBack := l10n.T9(&i18n.Message{ID: "HBarBack", Other: "BACK"})
+	tHBarSet := l10n.T9(&i18n.Message{ID: "HBarSet", Other: "SET"})
+
 	var stack float32
 	if state.CoreRunning {
-		stackHint(&stack, guide, "RESUME", h)
+		stackHint(&stack, guide, tHBarResume, h)
 	}
-	stackHint(&stack, upDown, "NAVIGATE", h)
-	stackHint(&stack, b, "BACK", h)
-	stackHint(&stack, leftRight, "SET", h)
+	stackHint(&stack, upDown, tHBarNavigate, h)
+	stackHint(&stack, b, tHBarBack, h)
+	stackHint(&stack, leftRight, tHBarSet, h)
 }

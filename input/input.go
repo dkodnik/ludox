@@ -11,6 +11,9 @@ import (
 	ntf "github.com/libretro/ludo/notifications"
 	"github.com/libretro/ludo/settings"
 	"github.com/libretro/ludo/video"
+
+	"github.com/libretro/ludo/l10n"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
 // MaxPlayers is the maximum number of players to poll input for
@@ -54,14 +57,18 @@ func joystickCallback(joy glfw.Joystick, event glfw.PeripheralEvent) {
 	switch event {
 	case glfw.Connected:
 		if joy.IsGamepad() {
-			ntf.DisplayAndLog(ntf.Info, "Input", "Joystick #%d plugged: %s.", joy, glfw.Joystick.GetName(joy))
+			txtI18n := l10n.T9(&i18n.Message{ID: "JoystickPlugged", Other: "Joystick #%d plugged: %s."})
+			ntf.DisplayAndLog(ntf.Info, "Input", txtI18n, joy, glfw.Joystick.GetName(joy))
 		} else {
-			ntf.DisplayAndLog(ntf.Warning, "Input", "Joystick #%d plugged: %s but not configured.", joy, glfw.Joystick.GetName(joy))
+			txtI18n := l10n.T9(&i18n.Message{ID: "JoystickPluggedNotC", Other: "Joystick #%d plugged: %s but not configured."})
+			ntf.DisplayAndLog(ntf.Warning, "Input", txtI18n, joy, glfw.Joystick.GetName(joy))
 		}
 	case glfw.Disconnected:
-		ntf.DisplayAndLog(ntf.Info, "Input", "Joystick #%d unplugged.", joy)
+		txtI18n := l10n.T9(&i18n.Message{ID: "JoystickUnplugged", Other: "Joystick #%d unplugged."})
+		ntf.DisplayAndLog(ntf.Info, "Input", txtI18n, joy)
 	default:
-		ntf.DisplayAndLog(ntf.Warning, "Input", "Joystick #%d unhandled event: %d.", joy, event)
+		txtI18n := l10n.T9(&i18n.Message{ID: "JoystickUnhandled", Other: "Joystick #%d unhandled event: %d."})
+		ntf.DisplayAndLog(ntf.Warning, "Input", txtI18n, joy, event)
 	}
 }
 
@@ -168,7 +175,7 @@ func Poll() {
 	NewState = pollKeyboard(NewState)
 	Pressed, Released = getPressedReleased(NewState, OldState)
 
-	// Store the old input state for comparisions
+	// Store the old input state for comparisons
 	OldState = NewState
 }
 

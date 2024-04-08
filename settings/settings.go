@@ -16,6 +16,9 @@ import (
 	"github.com/libretro/ludo/ludos"
 	"github.com/libretro/ludo/utils"
 	"github.com/pelletier/go-toml"
+
+	"github.com/libretro/ludo/l10n"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
 // Settings is the list of available settings for the program. It serializes to TOML.
@@ -36,6 +39,8 @@ type Settings struct {
 
 	CoreForPlaylist map[string]string `hide:"always" toml:"core_for_playlist"`
 
+	Language string `toml:"language" fmt:"<%s>"`
+
 	FileDirectory        string `hide:"ludos" toml:"files_dir" label:"Files Directory" fmt:"%s" widget:"dir"`
 	CoresDirectory       string `hide:"ludos" toml:"cores_dir" label:"Cores Directory" fmt:"%s" widget:"dir"`
 	AssetsDirectory      string `hide:"ludos" toml:"assets_dir" label:"Assets Directory" fmt:"%s" widget:"dir"`
@@ -46,6 +51,7 @@ type Settings struct {
 	SystemDirectory      string `hide:"ludos" toml:"system_dir" label:"System Directory" fmt:"%s" widget:"dir"`
 	PlaylistsDirectory   string `hide:"ludos" toml:"playlists_dir" label:"Playlists Directory" fmt:"%s" widget:"dir"`
 	ThumbnailsDirectory  string `hide:"ludos" toml:"thumbnail_dir" label:"Thumbnails Directory" fmt:"%s" widget:"dir"`
+	LanguagesDirectory   string `hide:"ludos" toml:"languages_dir" label:"Languages Directory" fmt:"%s" widget:"dir"`
 
 	SSHService       bool `hide:"app" toml:"ssh_service" label:"SSH" widget:"switch" service:"sshd.service" path:"/storage/.cache/services/sshd.conf"`
 	SambaService     bool `hide:"app" toml:"samba_service" label:"Samba" widget:"switch" service:"smbd.service" path:"/storage/.cache/services/samba.conf"`
@@ -136,4 +142,60 @@ func CoreForPlaylist(playlist string) (string, error) {
 		return filepath.Join(Current.CoresDirectory, c+utils.CoreExt()), nil
 	}
 	return "", errors.New("default core not set")
+}
+
+// func SettingLabel(l *l10n.Lng, toml_name string) string {
+func SettingLabel(toml_name string) string {
+	switch toml_name {
+	case "video_fullscreen":
+		return l10n.T9(&i18n.Message{ID: "VideoFullscreen", Other: "Video Fullscreen"})
+	case "video_monitor_index":
+		return l10n.T9(&i18n.Message{ID: "VideoMonitorIndex", Other: "Video Monitor Index"})
+	case "video_filter":
+		return l10n.T9(&i18n.Message{ID: "VideoFilter", Other: "Video Filter"})
+	case "video_dark_mode":
+		return l10n.T9(&i18n.Message{ID: "VideoDarkMode", Other: "Video Dark Mode"})
+	case "audio_volume":
+		return l10n.T9(&i18n.Message{ID: "AudioVolume", Other: "Audio Volume"})
+	case "menu_audio_volume":
+		return l10n.T9(&i18n.Message{ID: "MenuAudioVolume", Other: "Menu Audio Volume"})
+	case "menu_showhiddenfiles":
+		return l10n.T9(&i18n.Message{ID: "ShowHiddenFiles", Other: "Show Hidden Files"})
+	case "input_map_axis_to_dpad":
+		return l10n.T9(&i18n.Message{ID: "MapSticksToDPad", Other: "Map Sticks To DPad"})
+	case "core_for_playlist":
+		return ""
+	case "language":
+		return l10n.T9(&i18n.Message{ID: "Language", Other: "Language"})
+	case "files_dir":
+		return l10n.T9(&i18n.Message{ID: "FilesDirectory", Other: "Files Directory"})
+	case "cores_dir":
+		return l10n.T9(&i18n.Message{ID: "CoresDirectory", Other: "Cores Directory"})
+	case "assets_dir":
+		return l10n.T9(&i18n.Message{ID: "AssetsDirectory", Other: "Assets Directory"})
+	case "database_dir":
+		return l10n.T9(&i18n.Message{ID: "DatabaseDirectory", Other: "Database Directory"})
+	case "savestates_dir":
+		return l10n.T9(&i18n.Message{ID: "SavestatesDirectory", Other: "Savestates Directory"})
+	case "savefiles_dir":
+		return l10n.T9(&i18n.Message{ID: "SavefilesDirectory", Other: "Savefiles Directory"})
+	case "screenshots_dir":
+		return l10n.T9(&i18n.Message{ID: "ScreenshotsDirectory", Other: "Screenshots Directory"})
+	case "system_dir":
+		return l10n.T9(&i18n.Message{ID: "SystemDirectory", Other: "System Directory"})
+	case "playlists_dir":
+		return l10n.T9(&i18n.Message{ID: "PlaylistsDirectory", Other: "Playlists Directory"})
+	case "thumbnail_dir":
+		return l10n.T9(&i18n.Message{ID: "ThumbnailsDirectory", Other: "Thumbnails Directory"})
+	case "languages_dir":
+		return l10n.T9(&i18n.Message{ID: "LanguagesDirectory", Other: "Languages Directory"})
+	case "ssh_service":
+		return l10n.T9(&i18n.Message{ID: "SSHService", Other: "SSH"})
+	case "samba_service":
+		return l10n.T9(&i18n.Message{ID: "SambaService", Other: "Samba"})
+	case "bluetooth_service":
+		return l10n.T9(&i18n.Message{ID: "BluetoothService", Other: "Bluetooth"})
+	}
+
+	return ""
 }

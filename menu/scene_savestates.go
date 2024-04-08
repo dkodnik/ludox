@@ -11,6 +11,9 @@ import (
 	"github.com/libretro/ludo/settings"
 	"github.com/libretro/ludo/state"
 	"github.com/libretro/ludo/utils"
+
+	"github.com/libretro/ludo/l10n"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
 type sceneSavestates struct {
@@ -19,10 +22,15 @@ type sceneSavestates struct {
 
 func buildSavestates() Scene {
 	var list sceneSavestates
-	list.label = "Savestates"
+
+	tSavestates := l10n.T9(&i18n.Message{ID: "Savestates", Other: "Savestates"})
+
+	list.label = tSavestates //"Savestates"
+
+	tSaveState := l10n.T9(&i18n.Message{ID: "SaveState", Other: "Save State"})
 
 	list.children = append(list.children, entry{
-		label: "Save State",
+		label: tSaveState, //"Save State",
 		icon:  "savestate",
 		callbackOK: func() {
 			name := utils.DatedName(state.GamePath)
@@ -36,7 +44,8 @@ func buildSavestates() Scene {
 			} else {
 				menu.stack[len(menu.stack)-1] = buildSavestates()
 				menu.tweens.FastForward()
-				ntf.DisplayAndLog(ntf.Success, "Menu", "State saved.")
+				txtI18n := l10n.T9(&i18n.Message{ID: "StateSaved", Other: "State saved."})
+				ntf.DisplayAndLog(ntf.Success, "Menu", txtI18n)
 			}
 		},
 	})
@@ -50,7 +59,7 @@ func buildSavestates() Scene {
 		path := path
 		date := strings.Replace(utils.FileName(path), gameName+"@", "", 1)
 		list.children = append(list.children, entry{
-			label: "Load " + date,
+			label: "Load " + date, // TODO: !Локализовать!
 			icon:  "loadstate",
 			path:  path,
 			callbackOK: func() {
@@ -60,7 +69,8 @@ func buildSavestates() Scene {
 				} else {
 					state.MenuActive = false
 
-					ntf.DisplayAndLog(ntf.Success, "Menu", "State loaded.")
+					txtI18n := l10n.T9(&i18n.Message{ID: "StateLoaded", Other: "State loaded."})
+					ntf.DisplayAndLog(ntf.Success, "Menu", txtI18n)
 				}
 			},
 			callbackX: func() { askDeleteSavestateConfirmation(func() { deleteSavestateEntry(&list, path) }) },
@@ -106,7 +116,8 @@ func removeSavestateEntry(s []entry, path string) []entry {
 func deleteSavestateEntry(list *sceneSavestates, path string) {
 	err := os.Remove(path)
 	if err != nil {
-		ntf.DisplayAndLog(ntf.Error, "Menu", "Could not delete savestate: %s", err.Error())
+		txtI18n := l10n.T9(&i18n.Message{ID: "CouldNotDelSavState", Other: "Could not delete savestate: %s"})
+		ntf.DisplayAndLog(ntf.Error, "Menu", txtI18n, err.Error())
 		return
 	}
 	list.children = removeSavestateEntry(list.children, path)
@@ -170,20 +181,27 @@ func (s *sceneSavestates) drawHintBar() {
 
 	_, upDown, _, a, b, x, _, _, _, guide := hintIcons()
 
+	tHBarResume := l10n.T9(&i18n.Message{ID: "HBarResume", Other: "RESUME"})
+	tHBarNavigate := l10n.T9(&i18n.Message{ID: "HBarNavigate", Other: "NAVIGATE"})
+	tHBarBack := l10n.T9(&i18n.Message{ID: "HBarBack", Other: "BACK"})
+	tHBarSave := l10n.T9(&i18n.Message{ID: "HBarSave", Other: "SAVE"})
+	tHBarLoad := l10n.T9(&i18n.Message{ID: "HBarLoad", Other: "LOAD"})
+	tHBarDelete := l10n.T9(&i18n.Message{ID: "HBarDelete", Other: "DELETE"})
+
 	var stack float32
 	if state.CoreRunning {
-		stackHint(&stack, guide, "RESUME", h)
+		stackHint(&stack, guide, tHBarResume, h)
 	}
-	stackHint(&stack, upDown, "NAVIGATE", h)
-	stackHint(&stack, b, "BACK", h)
+	stackHint(&stack, upDown, tHBarNavigate, h)
+	stackHint(&stack, b, tHBarBack, h)
 	if ptr == 0 {
-		stackHint(&stack, a, "SAVE", h)
+		stackHint(&stack, a, tHBarSave, h)
 	} else {
-		stackHint(&stack, a, "LOAD", h)
+		stackHint(&stack, a, tHBarLoad, h)
 	}
 
 	list := menu.stack[len(menu.stack)-1].Entry()
 	if list.children[list.ptr].callbackX != nil {
-		stackHint(&stack, x, "DELETE", h)
+		stackHint(&stack, x, tHBarDelete, h)
 	}
 }

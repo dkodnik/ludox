@@ -2,6 +2,9 @@ package patch
 
 import (
 	"errors"
+
+	"github.com/libretro/ludo/l10n"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
 // EOF is the end of the IPS patch
@@ -84,16 +87,19 @@ func ipsAllocTargetData(patch, source []byte) ([]byte, error) {
 		}
 	}
 
-	return nil, errors.New("invalid patch")
+	txtI18n := l10n.T9(&i18n.Message{ID: "InvalidPatch", Other: "invalid patch"})
+	return nil, errors.New(txtI18n)
 }
 
 func applyIPS(patch, source []byte) (*[]byte, error) {
 	if len(patch) < 8 {
-		return nil, errors.New("patch too small")
+		txtI18n := l10n.T9(&i18n.Message{ID: "PatchTooSmall", Other: "patch too small"})
+		return nil, errors.New(txtI18n)
 	}
 
 	if string(patch[0:5]) != "PATCH" {
-		return nil, errors.New("invalid patch header")
+		txtI18n := l10n.T9(&i18n.Message{ID: "InvalidPatchHeader", Other: "invalid patch header"})
+		return nil, errors.New(txtI18n)
 	}
 
 	targetData, err := ipsAllocTargetData(patch, source)
@@ -172,5 +178,6 @@ func applyIPS(patch, source []byte) (*[]byte, error) {
 		}
 	}
 
-	return nil, errors.New("invalid patch")
+	txtI18n := l10n.T9(&i18n.Message{ID: "InvalidPatch", Other: "invalid patch"})
+	return nil, errors.New(txtI18n)
 }

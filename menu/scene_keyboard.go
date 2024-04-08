@@ -7,6 +7,9 @@ import (
 	"github.com/libretro/ludo/video"
 	"github.com/tanema/gween"
 	"github.com/tanema/gween/ease"
+
+	"github.com/libretro/ludo/l10n"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
 type sceneKeyboard struct {
@@ -209,11 +212,18 @@ func (s *sceneKeyboard) drawHintBar() {
 
 	arrows, _, _, a, b, x, y, start, _, _ := hintIcons()
 
+	tHBarSelect := l10n.T9(&i18n.Message{ID: "HBarSelect", Other: "SELECT"})
+	tHBarBack := l10n.T9(&i18n.Message{ID: "HBarBack", Other: "BACK"})
+	tHBarShift := l10n.T9(&i18n.Message{ID: "HBarShift", Other: "SHIFT"})
+	tHBarDelete := l10n.T9(&i18n.Message{ID: "HBarDelete", Other: "DELETE"})
+	tHBarInsert := l10n.T9(&i18n.Message{ID: "HBarInsert", Other: "INSERT"})
+	tHBarDone := l10n.T9(&i18n.Message{ID: "HBarDone", Other: "DONE"})
+
 	var stack float32
-	stackHint(&stack, arrows, "SELECT", h)
-	stackHint(&stack, b, "BACK", h)
-	stackHint(&stack, x, "SHIFT", h)
-	stackHint(&stack, y, "DELETE", h)
-	stackHint(&stack, a, "INSERT", h)
-	stackHint(&stack, start, "DONE", h)
+	stackHint(&stack, arrows, tHBarSelect, h)
+	stackHint(&stack, b, tHBarBack, h)
+	stackHint(&stack, x, tHBarShift, h)
+	stackHint(&stack, y, tHBarDelete, h)
+	stackHint(&stack, a, tHBarInsert, h)
+	stackHint(&stack, start, tHBarDone, h)
 }

@@ -4,6 +4,9 @@ import (
 	"errors"
 	"hash"
 	"hash/crc32"
+
+	"github.com/libretro/ludo/l10n"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
 type file struct {
@@ -61,14 +64,16 @@ func applyUPS(patchData, sourceData []byte) (*[]byte, error) {
 	}
 
 	if len(patch.Data) < 18 {
-		return nil, errors.New("patch too small")
+		txtI18n := l10n.T9(&i18n.Message{ID: "PatchTooSmall", Other: "patch too small"})
+		return nil, errors.New(txtI18n)
 	}
 
 	if upsRead(patch) != 'U' ||
 		upsRead(patch) != 'P' ||
 		upsRead(patch) != 'S' ||
 		upsRead(patch) != '1' {
-		return nil, errors.New("invalid patch header")
+		txtI18n := l10n.T9(&i18n.Message{ID: "InvalidPatchHeader", Other: "invalid patch header"})
+		return nil, errors.New(txtI18n)
 	}
 
 	sourceReadLength := upsDecode(patch)
@@ -76,7 +81,8 @@ func applyUPS(patchData, sourceData []byte) (*[]byte, error) {
 
 	if len(source.Data) != sourceReadLength &&
 		len(source.Data) != targetReadLength {
-		return nil, errors.New("invalid source")
+		txtI18n := l10n.T9(&i18n.Message{ID: "InvalidSource", Other: "invalid source"})
+		return nil, errors.New(txtI18n)
 	}
 
 	targetLength := sourceReadLength
@@ -134,20 +140,24 @@ func checks(patch, source, target *file, sourceReadLength, targetReadLength int)
 	}
 
 	if patchResultChecksum != patchReadChecksum {
-		return errors.New("invalid patch")
+		txtI18n := l10n.T9(&i18n.Message{ID: "InvalidPatch", Other: "invalid patch"})
+		return errors.New(txtI18n)
 	}
 
 	if source.Checksum == sourceReadChecksum && len(source.Data) == sourceReadLength {
 		if target.Checksum == targetReadChecksum && len(target.Data) == targetReadLength {
 			return nil
 		}
-		return errors.New("invalid target")
+		txtI18n := l10n.T9(&i18n.Message{ID: "InvalidTarget", Other: "invalid target"})
+		return errors.New(txtI18n)
 	} else if source.Checksum == targetReadChecksum && len(source.Data) == targetReadLength {
 		if target.Checksum == sourceReadChecksum && len(target.Data) == sourceReadLength {
 			return nil
 		}
-		return errors.New("invalid target")
+		txtI18n := l10n.T9(&i18n.Message{ID: "InvalidTarget", Other: "invalid target"})
+		return errors.New(txtI18n)
 	}
 
-	return errors.New("invalid source")
+	txtI18n := l10n.T9(&i18n.Message{ID: "InvalidSource", Other: "invalid source"})
+	return errors.New(txtI18n)
 }

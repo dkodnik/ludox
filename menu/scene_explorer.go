@@ -13,6 +13,9 @@ import (
 	ntf "github.com/libretro/ludo/notifications"
 	"github.com/libretro/ludo/settings"
 	"github.com/libretro/ludo/utils"
+
+	"github.com/libretro/ludo/l10n"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
 type sceneExplorer struct {
@@ -111,7 +114,10 @@ func appendNode(list *sceneExplorer, fullPath string, name string, f os.FileInfo
 
 func buildExplorer(path string, exts []string, cb func(string), dirAction *entry, prettifier Prettifier) Scene {
 	var list sceneExplorer
-	list.label = "Explorer"
+
+	tExplorer := l10n.T9(&i18n.Message{ID: "Explorer", Other: "Explorer"})
+
+	list.label = tExplorer //"Explorer"
 
 	// Display the special directory action entry.
 	if dirAction != nil && dirAction.label != "" {
@@ -170,8 +176,10 @@ func buildExplorer(path string, exts []string, cb func(string), dirAction *entry
 	buildIndexes(&list.entry)
 
 	if len(files) == 0 {
+		tEmpty := l10n.T9(&i18n.Message{ID: "Empty", Other: "Empty"})
+
 		list.children = append(list.children, entry{
-			label: "Empty",
+			label: tEmpty, //"Empty",
 			icon:  "subsetting",
 		})
 	}

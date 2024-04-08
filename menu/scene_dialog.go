@@ -4,6 +4,9 @@ import (
 	"github.com/libretro/ludo/audio"
 	"github.com/libretro/ludo/input"
 	"github.com/libretro/ludo/libretro"
+
+	"github.com/libretro/ludo/l10n"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
 type sceneDialog struct {
@@ -13,7 +16,10 @@ type sceneDialog struct {
 
 func buildYesNoDialog(title, line1, line2 string, callbackOK func()) Scene {
 	var list sceneDialog
-	list.label = "Confirm Dialog"
+
+	tConfirmDialog := l10n.T9(&i18n.Message{ID: "ConfirmDialog", Other: "Confirm Dialog"})
+
+	list.label = tConfirmDialog //"Confirm Dialog"
 	list.callbackOK = callbackOK
 	list.title = title
 	list.line1 = line1
@@ -85,6 +91,9 @@ func (s *sceneDialog) render() {
 
 	_, _, _, a, b, _, _, _, _, _ := hintIcons()
 
+	tNO := l10n.T9(&i18n.Message{ID: "NO", Other: "NO"})
+	tYES := l10n.T9(&i18n.Message{ID: "YES", Other: "YES"})
+
 	menu.DrawImage(
 		b,
 		fw/2-width/2*menu.ratio+margin*menu.ratio,
@@ -94,7 +103,7 @@ func (s *sceneDialog) render() {
 		fw/2-width/2*menu.ratio+margin*menu.ratio+70*menu.ratio,
 		fh/2+height/2*menu.ratio-23*menu.ratio-margin*menu.ratio,
 		0.4*menu.ratio,
-		"NO")
+		tNO) //"NO")
 
 	menu.DrawImage(
 		a,
@@ -105,7 +114,7 @@ func (s *sceneDialog) render() {
 		fw/2+width/2*menu.ratio-150*menu.ratio-margin*menu.ratio+70*menu.ratio,
 		fh/2+height/2*menu.ratio-23*menu.ratio-margin*menu.ratio,
 		0.4*menu.ratio,
-		"YES")
+		tYES) //"YES")
 }
 
 func (s *sceneDialog) drawHintBar() {

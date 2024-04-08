@@ -46,6 +46,8 @@ type Font struct {
 	atlasHeight float32
 }
 
+const exUtf8 = 5
+
 type point [4]float32
 
 func max(a, b float32) float32 {
@@ -55,7 +57,7 @@ func max(a, b float32) float32 {
 	return b
 }
 
-// LoadTrueTypeFont builds a set of textures based on a ttf files gylphs
+// LoadTrueTypeFont builds a set of textures based on a ttf files glyphs
 func LoadTrueTypeFont(program uint32, r io.Reader, scale int32, low, high rune, dir Direction) (*Font, error) {
 	data, err := ioutil.ReadAll(r)
 	if err != nil {
@@ -68,7 +70,7 @@ func LoadTrueTypeFont(program uint32, r io.Reader, scale int32, low, high rune, 
 		return nil, err
 	}
 
-	// Make Font stuct type
+	// Make Font struct type
 	f := new(Font)
 	f.fontChar = make([]*character, 0, high-low+1)
 	f.program = program                       // Set shader program
@@ -82,8 +84,8 @@ func LoadTrueTypeFont(program uint32, r io.Reader, scale int32, low, high rune, 
 	})
 
 	var lineHeight float32
-	f.atlasWidth = 1024
-	f.atlasHeight = 1024
+	f.atlasWidth = 4 * 256 * exUtf8
+	f.atlasHeight = 4 * 256 * exUtf8
 	for ch := low; ch <= high; ch++ {
 		gBnd, _, ok := ttfFace.GlyphBounds(ch)
 		if !ok {
@@ -103,7 +105,7 @@ func LoadTrueTypeFont(program uint32, r io.Reader, scale int32, low, high rune, 
 	x := margin
 	y := margin
 
-	// Make each gylph
+	// Make each glyph
 	for ch := low; ch <= high; ch++ {
 		char := new(character)
 
@@ -115,7 +117,7 @@ func LoadTrueTypeFont(program uint32, r io.Reader, scale int32, low, high rune, 
 		gh := int32((gBnd.Max.Y - gBnd.Min.Y) >> 6)
 		gw := int32((gBnd.Max.X - gBnd.Min.X) >> 6)
 
-		// If gylph has no dimensions set to a max value
+		// If glyph has no dimensions set to a max value
 		if gw == 0 || gh == 0 {
 			gBnd = ttf.Bounds(fixed.Int26_6(scale))
 			gw = int32((gBnd.Max.X - gBnd.Min.X) >> 6)
@@ -130,7 +132,7 @@ func LoadTrueTypeFont(program uint32, r io.Reader, scale int32, low, high rune, 
 
 		// The glyph's ascent and descent equal -bounds.Min.Y and +bounds.Max.Y.
 		gAscent := int(-gBnd.Min.Y) >> 6
-		gdescent := int(gBnd.Max.Y) >> 6
+		gDescent := int(gBnd.Max.Y) >> 6
 
 		// Set w,h and adv, bearing V and bearing H in char
 		char.x = x
@@ -138,7 +140,7 @@ func LoadTrueTypeFont(program uint32, r io.Reader, scale int32, low, high rune, 
 		char.width = int(gw)
 		char.height = int(gh)
 		char.advance = int(gAdv)
-		char.bearingV = gdescent
+		char.bearingV = gDescent
 		char.bearingH = (int(gBnd.Min.X) >> 6)
 
 		clip := image.Rect(x, y, x+int(gw), y+int(gh))
@@ -227,7 +229,7 @@ func LoadFont(file string, scale int32, windowWidth int, windowHeight int) (*Fon
 	resUniform := gl.GetUniformLocation(program, gl.Str("resolution\x00"))
 	gl.Uniform2f(resUniform, float32(windowWidth), float32(windowHeight))
 
-	return LoadTrueTypeFont(program, fd, scale, 32, 256, LeftToRight)
+	return LoadTrueTypeFont(program, fd, scale, 32, 256*exUtf8, LeftToRight)
 }
 
 // SetColor allows you to set the text color to be used when you draw the text
@@ -334,7 +336,7 @@ func (f *Font) Width(scale float32, fs string, argv ...interface{}) float32 {
 		// Get rune
 		runeIndex := indices[i]
 
-		// Skip runes that are not in font chacter range
+		// Skip runes that are not in font character range
 		if int(runeIndex)-int(lowChar) > len(f.fontChar) || runeIndex < lowChar {
 			fmt.Printf("%c %d\n", runeIndex, runeIndex)
 			continue
