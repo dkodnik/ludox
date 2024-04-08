@@ -1,0 +1,1 @@
+GetCoreOptionDefinitions - это помощник обратного вызова среды, который возвращает список CoreOptionDefinition, необходимых ядру.

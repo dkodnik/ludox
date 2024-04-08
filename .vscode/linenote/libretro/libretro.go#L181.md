@@ -1,0 +1,1 @@
+Values возвращает возможные значения CoreOptionDefinition в виде строки

@@ -1,0 +1,1 @@
+SetValue устанавливает значение Variable

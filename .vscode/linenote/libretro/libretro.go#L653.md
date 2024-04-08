@@ -1,0 +1,1 @@
+BindPerfCallback - привязывает f к perf обратному вызову get_time_usec.

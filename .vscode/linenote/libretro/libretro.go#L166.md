@@ -1,0 +1,1 @@
+Key - возвращает ключ CoreOptionDefinition в виде строки
