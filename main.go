@@ -11,6 +11,7 @@ import (
 	"github.com/go-gl/glfw/v3.3/glfw"
 	"github.com/libretro/ludo/audio"
 	"github.com/libretro/ludo/core"
+	"github.com/libretro/ludo/favorites"
 	"github.com/libretro/ludo/history"
 	"github.com/libretro/ludo/input"
 	"github.com/libretro/ludo/menu"
@@ -118,6 +119,8 @@ func main() {
 	playlists.Load()
 
 	history.Load()
+
+	favorites.Load()
 
 	vid := video.Init(settings.Current.VideoFullscreen)
 

@@ -1,6 +1,7 @@
 package menu
 
 import (
+	"github.com/libretro/ludo/favorites"
 	ntf "github.com/libretro/ludo/notifications"
 	"github.com/libretro/ludo/state"
 	"github.com/libretro/ludo/utils"
@@ -40,6 +41,22 @@ func buildQuickMenu() Scene {
 			state.Core.Reset()
 			state.MenuActive = false
 			state.FastForward = false
+		},
+	})
+
+	tToFavorites := l10n.T9(&i18n.Message{ID: "ToFavorites", Other: "To Favorites"})
+
+	list.children = append(list.children, entry{
+		label: tToFavorites,
+		icon:  "favorites-content",
+		callbackOK: func() {
+			favorites.Push(favorites.Game{
+				Path:     state.GamePath,
+				Name:     utils.FileName(state.GamePath),
+				CorePath: state.CorePath,
+			})
+			txtI18n := l10n.T9(&i18n.Message{ID: "AddedToFavorites", Other: "Added to Favorites."})
+			ntf.DisplayAndLog(ntf.Success, "Menu", txtI18n)
 		},
 	})
 

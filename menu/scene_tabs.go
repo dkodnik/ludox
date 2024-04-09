@@ -70,6 +70,17 @@ func buildTabs() Scene {
 		},
 	})
 
+	tFavoriteTab := l10n.T9(&i18n.Message{ID: "FavoriteTab", Other: "Favorites"})
+	tFavoriteSub := l10n.T9(&i18n.Message{ID: "FavoriteSub", Other: "The best of the best"})
+	list.children = append(list.children, entry{
+		label:    tFavoriteTab,
+		subLabel: tFavoriteSub,
+		icon:     "favorites-content",
+		callbackOK: func() {
+			menu.Push(buildFavorites())
+		},
+	})
+
 	list.children = append(list.children, getPlaylists()...)
 
 	tAddGamesTab := l10n.T9(&i18n.Message{ID: "AddGamesTab", Other: "Add games"})

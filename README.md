@@ -1,3 +1,8 @@
+fork - Ludo:
+- i18n
+- update 'Game Controller DB' 
+- favorites
+
 # ludo ![Build Status](https://github.com/libretro/ludo/workflows/CI/badge.svg) [![GoDoc](https://godoc.org/github.com/libretro/ludo?status.svg)](https://godoc.org/github.com/libretro/ludo)
 
 Ludo is a work in progress libretro frontend written in go.
