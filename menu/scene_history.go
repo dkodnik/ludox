@@ -70,6 +70,8 @@ func loadHistoryEntry(list Scene, game history.Game) {
 			ntf.DisplayAndLog(ntf.Error, "Menu", err.Error())
 			return
 		}
+
+		state.SystemName = game.System
 	}
 	if state.GamePath != game.Path {
 		err := core.LoadGame(game.Path)

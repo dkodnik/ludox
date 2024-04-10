@@ -4,4 +4,4 @@ debug
 *.app
 *.dmg
 cores
-i18n/translate.*
+i18n/translate*

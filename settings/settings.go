@@ -144,7 +144,21 @@ func CoreForPlaylist(playlist string) (string, error) {
 	return "", errors.New("default core not set")
 }
 
-// func SettingLabel(l *l10n.Lng, toml_name string) string {
+func PlaylistsForCore(corePath string) ([]string, error) {
+	var retdat []string
+	file_name := utils.FileName(corePath)
+	for i, g := range Current.CoreForPlaylist {
+		if g == file_name {
+			retdat = append(retdat, i)
+		}
+	}
+	if len(retdat) > 0 {
+		return retdat, nil
+	} else {
+		return retdat, errors.New("default playlist not set")
+	}
+}
+
 func SettingLabel(toml_name string) string {
 	switch toml_name {
 	case "video_fullscreen":

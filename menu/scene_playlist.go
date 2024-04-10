@@ -113,6 +113,8 @@ func loadPlaylistEntry(list *scenePlaylist, playlist string, game playlists.Game
 			ntf.DisplayAndLog(ntf.Error, "Menu", err.Error())
 			return
 		}
+
+		state.SystemName = playlist
 	}
 	if state.GamePath != game.Path {
 		if err := core.LoadGame(game.Path); err != nil {
@@ -278,6 +280,8 @@ func (s *scenePlaylist) render() {
 func (s *scenePlaylist) drawHintBar() {
 	w, h := menu.GetFramebufferSize()
 	menu.DrawRect(0, float32(h)-70*menu.ratio, float32(w), 70*menu.ratio, 0, lightGrey)
+
+	// TODO: add Favorites
 
 	_, upDown, _, a, b, x, _, _, _, guide := hintIcons()
 

@@ -6,6 +6,7 @@ import (
 
 	"github.com/libretro/ludo/core"
 	"github.com/libretro/ludo/favorites"
+	"github.com/libretro/ludo/history"
 	ntf "github.com/libretro/ludo/notifications"
 	"github.com/libretro/ludo/state"
 
@@ -70,6 +71,8 @@ func loadFavoritesEntry(list Scene, game favorites.Game) {
 			ntf.DisplayAndLog(ntf.Error, "Menu", err.Error())
 			return
 		}
+
+		state.SystemName = game.System
 	}
 	if state.GamePath != game.Path {
 		err := core.LoadGame(game.Path)
@@ -77,7 +80,7 @@ func loadFavoritesEntry(list Scene, game favorites.Game) {
 			ntf.DisplayAndLog(ntf.Error, "Menu", err.Error())
 			return
 		}
-		favorites.Push(favorites.Game{
+		history.Push(history.Game{
 			Path:     game.Path,
 			Name:     game.Name,
 			System:   game.System,

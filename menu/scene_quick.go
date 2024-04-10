@@ -3,6 +3,7 @@ package menu
 import (
 	"github.com/libretro/ludo/favorites"
 	ntf "github.com/libretro/ludo/notifications"
+	"github.com/libretro/ludo/settings"
 	"github.com/libretro/ludo/state"
 	"github.com/libretro/ludo/utils"
 
@@ -50,9 +51,25 @@ func buildQuickMenu() Scene {
 		label: tToFavorites,
 		icon:  "favorites-content",
 		callbackOK: func() {
+			playlist := ""
+			if len(state.SystemName) > 0 {
+				playlist = state.SystemName
+			} else {
+				playlists, err := settings.PlaylistsForCore(state.CorePath)
+				if err != nil {
+					ntf.DisplayAndLog(ntf.Error, "Menu", err.Error())
+				} else {
+					// FIXME: the problem is that the core can use emulation of
+					// several platforms, which one should I take? It is necessary
+					// to provide a choice to the user.
+					playlist = playlists[0]
+				}
+			}
+
 			favorites.Push(favorites.Game{
 				Path:     state.GamePath,
-				Name:     utils.FileName(state.GamePath),
+				Name:     utils.FileName(state.GamePath), // FIXME: it does not contain tags, so there is no thumbnail
+				System:   playlist,
 				CorePath: state.CorePath,
 			})
 			txtI18n := l10n.T9(&i18n.Message{ID: "AddedToFavorites", Other: "Added to Favorites."})
