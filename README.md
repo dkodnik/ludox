@@ -1,4 +1,4 @@
-fork - Ludo:
+# this fork - Ludo:
 - i18n
 - update 'Game Controller DB' 
 - favorites
