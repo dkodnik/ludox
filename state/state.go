@@ -33,3 +33,6 @@ var LudOS bool
 
 // FastForward will run the core as fast as possible
 var FastForward bool
+
+// SystemName (playlist name) is the name of the current system(platform)
+var SystemName string

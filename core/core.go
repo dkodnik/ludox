@@ -46,6 +46,8 @@ func Load(sofile string) error {
 	// This must be set before the environment callback is called
 	state.CorePath = sofile
 
+	state.SystemName = ""
+
 	var err error
 	state.Core, err = libretro.Load(sofile)
 	if err != nil {

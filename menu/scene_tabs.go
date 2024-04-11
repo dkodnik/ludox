@@ -70,6 +70,17 @@ func buildTabs() Scene {
 		},
 	})
 
+	tFavoriteTab := l10n.T9(&i18n.Message{ID: "FavoriteTab", Other: "Favorites"})
+	tFavoriteSub := l10n.T9(&i18n.Message{ID: "FavoriteSub", Other: "The best of the best"})
+	list.children = append(list.children, entry{
+		label:    tFavoriteTab,
+		subLabel: tFavoriteSub,
+		icon:     "favorites-content",
+		callbackOK: func() {
+			menu.Push(buildFavorites())
+		},
+	})
+
 	list.children = append(list.children, getPlaylists()...)
 
 	tAddGamesTab := l10n.T9(&i18n.Message{ID: "AddGamesTab", Other: "Add games"})
@@ -109,13 +120,13 @@ func refreshTabs() {
 	l := len(e.children)
 	pls := getPlaylists()
 
-	// This assumes that the 3 first tabs are not playlists, and that the last
+	// This assumes that the 4 first tabs are not playlists, and that the last
 	// tab is the scanner.
-	e.children = append(e.children[:3], append(pls, e.children[l-1:]...)...)
+	e.children = append(e.children[:4], append(pls, e.children[l-1:]...)...)
 
 	// Update which tab is the active tab after the refresh
-	if e.ptr >= 3 {
-		e.ptr += len(pls) - (l - 4)
+	if e.ptr >= 4 {
+		e.ptr += len(pls) - (l - 5)
 	}
 
 	// Ensure new icons are styled properly

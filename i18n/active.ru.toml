@@ -6,6 +6,10 @@ other = "Отсканировать свою коллекцию"
 hash = "sha1-08faecbd54580b6c9af335b63b77bb09b6d9467f"
 other = "Добавить игры"
 
+[AddedToFavorites]
+hash = "sha1-e3fbcace77d7e5deb8fd4b37d21ed113050d08c1"
+other = "Добавлено в Избранное."
+
 [AssetsDirectory]
 hash = "sha1-f2e82567282154cf93b2c28d895ff56faef4494e"
 other = "Каталог активов(ассетов)"
@@ -90,6 +94,10 @@ other = "Загрузка обновления %.0f%%%% "
 hash = "sha1-3159fe421b3221381b3c778dc1c3c26e4540be37"
 other = "Пусто"
 
+[EmptyFavorites]
+hash = "sha1-fe569076ff682887ba9d4d4afe76a6357fd93d59"
+other = "Избранное пусто"
+
 [EmptyHistory]
 hash = "sha1-6947679e7dbb6fb15dcd995bcf312dbb38374381"
 other = "Пустая история"
@@ -117,6 +125,18 @@ other = "Быстрая перемотка вперед ВЫКЛ"
 [FastForwardON]
 hash = "sha1-fe3f6d8007990a119707e678778dfa1544ee50d7"
 other = "Быстрая перемотка вперед ВКЛ"
+
+[FavoriteSub]
+hash = "sha1-a6036dd0192bd7a8cbe94bdc94faed0783994e72"
+other = "Лучшее из лучшего"
+
+[FavoriteTab]
+hash = "sha1-07b3e447db02b7cc20a78a57c316febae22ed72b"
+other = "Избранное"
+
+[Favorites]
+hash = "sha1-07b3e447db02b7cc20a78a57c316febae22ed72b"
+other = "Избранное"
 
 [FilesDirectory]
 hash = "sha1-7b2b55670822764f59cd6b3ce446f2de5ae78936"
@@ -433,6 +453,10 @@ other = "Сделать снимок экрана"
 [ThumbnailsDirectory]
 hash = "sha1-d093ade6768b64b8881feb5ecc7b1cdca9334d92"
 other = "Каталог миниатюр"
+
+[ToFavorites]
+hash = "sha1-4dd1d02c23a95697504487fe1e4d30e1c141ae6e"
+other = "В Избранное"
 
 [TookScreenshot]
 hash = "sha1-9e1d904fd2059ee20d5356c48bfdd30ad0e42e3b"

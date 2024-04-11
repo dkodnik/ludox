@@ -5,6 +5,7 @@ import (
 	"path/filepath"
 
 	"github.com/libretro/ludo/core"
+	"github.com/libretro/ludo/favorites"
 	"github.com/libretro/ludo/history"
 	ntf "github.com/libretro/ludo/notifications"
 	"github.com/libretro/ludo/state"
@@ -13,18 +14,18 @@ import (
 	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
-type sceneHistory struct {
+type sceneFavorites struct {
 	entry
 }
 
-func buildHistory() Scene {
-	var list sceneHistory
+func buildFavorites() Scene {
+	var list sceneFavorites
 
-	tHistory := l10n.T9(&i18n.Message{ID: "History", Other: "History"})
-	list.label = tHistory //"History"
+	tFavorites := l10n.T9(&i18n.Message{ID: "Favorites", Other: "Favorites"})
+	list.label = tFavorites
 
-	history.Load()
-	for _, game := range history.List {
+	favorites.Load()
+	for _, game := range favorites.List {
 		game := game // needed for callbackOK
 		strippedName, tags := extractTags(game.Name)
 		list.children = append(list.children, entry{
@@ -34,16 +35,16 @@ func buildHistory() Scene {
 			path:       game.Path,
 			system:     game.System,
 			tags:       tags,
-			callbackOK: func() { loadHistoryEntry(&list, game) },
-			callbackX:  func() { askDeleteGameConfirmation(func() { deleteHistoryEntry(&list, game) }) },
+			callbackOK: func() { loadFavoritesEntry(&list, game) },
+			callbackX:  func() { askDeleteGameConfirmation(func() { deleteFavoritesEntry(&list, game) }) },
 		})
 	}
 
-	if len(history.List) == 0 {
-		tEmptyHistory := l10n.T9(&i18n.Message{ID: "EmptyHistory", Other: "Empty history"})
+	if len(favorites.List) == 0 {
+		tEmptyFavorites := l10n.T9(&i18n.Message{ID: "EmptyFavorites", Other: "Empty favorites"})
 
 		list.children = append(list.children, entry{
-			label: tEmptyHistory, //"Empty history",
+			label: tEmptyFavorites,
 			icon:  "subsetting",
 		})
 	}
@@ -52,7 +53,7 @@ func buildHistory() Scene {
 	return &list
 }
 
-func loadHistoryEntry(list Scene, game history.Game) {
+func loadFavoritesEntry(list Scene, game favorites.Game) {
 	if _, err := os.Stat(game.Path); os.IsNotExist(err) {
 		txtI18n := l10n.T9(&i18n.Message{ID: "GameNotFound", Other: "Game not found."})
 		ntf.DisplayAndLog(ntf.Error, "Menu", txtI18n)
@@ -95,8 +96,8 @@ func loadHistoryEntry(list Scene, game history.Game) {
 	}
 }
 
-func removeHistoryGame(s []history.Game, game history.Game) []history.Game {
-	l := []history.Game{}
+func removeFavoritesGame(s []favorites.Game, game favorites.Game) []favorites.Game {
+	l := []favorites.Game{}
 	for _, g := range s {
 		if g.Path != game.Path {
 			l = append(l, g)
@@ -105,7 +106,7 @@ func removeHistoryGame(s []history.Game, game history.Game) []history.Game {
 	return l
 }
 
-func removeHistoryEntry(s []entry, game history.Game) []entry {
+func removeFavoritesEntry(s []entry, game favorites.Game) []entry {
 	l := []entry{}
 	for _, g := range s {
 		if g.path != game.Path {
@@ -116,17 +117,17 @@ func removeHistoryEntry(s []entry, game history.Game) []entry {
 	return l
 }
 
-func deleteHistoryEntry(list *sceneHistory, game history.Game) {
-	history.List = removeHistoryGame(history.List, game)
-	history.Save()
+func deleteFavoritesEntry(list *sceneFavorites, game favorites.Game) {
+	favorites.List = removeFavoritesGame(favorites.List, game)
+	favorites.Save()
 	refreshTabs()
-	list.children = removeHistoryEntry(list.children, game)
+	list.children = removeFavoritesEntry(list.children, game)
 
-	if len(history.List) == 0 {
-		tEmptyHistory := l10n.T9(&i18n.Message{ID: "EmptyHistory", Other: "Empty history"})
+	if len(favorites.List) == 0 {
+		tEmptyFavorites := l10n.T9(&i18n.Message{ID: "EmptyFavorites", Other: "Empty favorites"})
 
 		list.children = append(list.children, entry{
-			label: tEmptyHistory, //"Empty history",
+			label: tEmptyFavorites,
 			icon:  "subsetting",
 		})
 	}
@@ -140,28 +141,28 @@ func deleteHistoryEntry(list *sceneHistory, game history.Game) {
 }
 
 // Generic stuff
-func (s *sceneHistory) Entry() *entry {
+func (s *sceneFavorites) Entry() *entry {
 	return &s.entry
 }
 
-func (s *sceneHistory) segueMount() {
+func (s *sceneFavorites) segueMount() {
 	genericSegueMount(&s.entry)
 }
 
-func (s *sceneHistory) segueNext() {
+func (s *sceneFavorites) segueNext() {
 	genericSegueNext(&s.entry)
 }
 
-func (s *sceneHistory) segueBack() {
+func (s *sceneFavorites) segueBack() {
 	genericAnimate(&s.entry)
 }
 
-func (s *sceneHistory) update(dt float32) {
+func (s *sceneFavorites) update(dt float32) {
 	genericInput(&s.entry, dt)
 }
 
 // Override rendering
-func (s *sceneHistory) render() {
+func (s *sceneFavorites) render() {
 	list := &s.entry
 
 	_, h := menu.GetFramebufferSize()
@@ -244,7 +245,7 @@ func (s *sceneHistory) render() {
 	menu.ScissorEnd()
 }
 
-func (s *sceneHistory) drawHintBar() {
+func (s *sceneFavorites) drawHintBar() {
 	w, h := menu.GetFramebufferSize()
 	menu.DrawRect(0, float32(h)-70*menu.ratio, float32(w), 70*menu.ratio, 0, lightGrey)
 
